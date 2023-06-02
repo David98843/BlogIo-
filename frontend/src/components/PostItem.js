@@ -1,0 +1,179 @@
+import { useDataLayerValue } from './../DataLayer'
+import {truncateStr} from './../utils'
+import { useState } from 'react'
+
+const PostItem = ({post, id}) => {
+    const [{currentPost, user, displayComments}, dispatch] = useDataLayerValue()
+    const [numComments, setNumComment] = useState(null)
+
+    const fetchComments = async () => {
+        let res = await fetch(`http://localhost:5000/getComments?id=${post._id}`)
+        let data = await res.json()
+        if(data.comments){
+            return data.comments.length
+        }else{
+            return 0
+        }
+    }
+
+    function normalizePostBody(){
+        let body = document.getElementsByTagName('body')[0]
+        window.scrollTo({
+            'top': 0,
+            'behavior' : 'instant'
+        })
+        document.body.classList.add('no-overflow')
+    }
+
+    async function viewPost(){
+
+        if(!post.views.includes(user._id)){
+            dispatch({
+                type: 'SET_CURRENT_POST',
+                post: {
+                    ...post, 
+                    views:post.views.unshift(user._id)
+                }
+            })
+            let postViews = document.getElementById(`post-views-${id}`)
+            postViews.innerText = 1
+            await fetch(`http://localhost:5000/view?userID=${user._id}&postID=${post._id}&viewed=false`)
+        }else{
+            dispatch({
+                type: 'SET_CURRENT_POST',
+                post: post
+            })
+        }
+        normalizePostBody()
+    }
+
+    async function likePost() {
+        let postLikes = document.getElementById(`post-likes-${id}`)
+        let currLikes = Number(postLikes.innerText)
+        console.log(post.likes)
+        if(post.likes.includes(user._id)){
+            await fetch(`http://localhost:5000/like?userID=${user._id}&postID=${post._id}&liked=true`)
+            let newLikes = post.likes.filter((value) => {
+                return value == user._id ? '' : value
+            })
+            post = {
+                ...post, 
+                likes: [...newLikes]
+            }
+        }else{
+            await fetch(`http://localhost:5000/like?userID=${user._id}&postID=${post._id}&liked=false`)
+            post.likes.unshift(user._id)
+        }
+        postLikes.innerText = post.likes.length
+    }
+
+    function displayCommentBox(){
+        let commentBox = document.getElementById(`comment-box${id}`)
+        commentBox.classList.toggle('displayPostItemCommentBox')
+    }
+    
+    return (
+        post ? 
+            <div>
+            <a href={`#${post._id}`}>
+            <div className="post-item" id={`#${post._id}`}>
+                <div className="image"
+                onClick={ 
+                    () => {
+
+                        if(user){
+                            viewPost()
+                        }else{
+                            dispatch({
+                                type: 'SET_CURRENT_POST',
+                                post
+                            })
+                            normalizePostBody()
+                        }
+                        dispatch({
+                            type: 'TOGGLE_DISPLAY_COMMENT',
+                            currentValue: true
+                        })
+                    }
+                }>
+                    <img src="/images1/apple-1302430_1920.jpg" alt="post-image" width = "100%" height = "100%" id={`image-${id}`} onLoad={ async () => {
+                        let infoParagraph = document.getElementById(`info-para${id}`)
+                        infoParagraph.innerHTML = truncateStr(post.contentText,29)
+                        let commentsData = await fetchComments()
+                        setNumComment(commentsData)
+                    }} />
+                </div>
+                <div className="text" onClick={
+                    () => {
+                        if(user){
+                            viewPost()
+                        }else{
+                            dispatch({
+                                type: 'SET_CURRENT_POST',
+                                post
+                            })
+                            normalizePostBody()
+                        }
+                        dispatch({
+                            type: 'TOGGLE_DISPLAY_COMMENT',
+                            currentValue: true
+                        })
+                    }
+                }>
+                    <div className="info-col">
+                        <h2>{truncateStr(post.title, 10)}</h2>
+                        <p id={`info-para${id}`}></p>
+                    </div>
+                    <div className="date-col">
+                        <div className="item">
+                            <p>{post.dateCreated}</p>
+                            <p>{post.time}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="extra-info">
+                    <div className="icons">
+                        <div className="icon">
+                            <i className='las la-eye'></i>
+                            <span id={`post-views-${id}`}>{post.views.length}</span> 
+                        </div>
+                        <div className="icon" onClick={
+                            () => {
+                                if(user){
+                                    likePost()
+                                }
+                            }
+                        }>
+                            <i className='las la-heart'></i>
+                            <span id={`post-likes-${id}`}>{post.likes.length}</span> 
+                        </div>
+
+                        <div className="icon" onClick={() => {
+                            // displayCommentBox()
+                        }}>
+                            <i className='las la-comment-alt'></i>
+                            <span id={`post-comment${id}`}>{numComments || 0}</span>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
+
+            {/* <div className="post-item-comment-box" id={`comment-box${id}`}>
+                <div className="input">
+                    <input type="text" name={`comment${id}`} id={`comment${id}`} autoComplete='off'  />
+                </div>
+                <div className="submit">
+                    <button>
+                        <i className = 'ri-send-plane-2-fill'></i>
+                    </button>
+                </div>
+            </div> */}
+
+            </a>
+
+        </div> : ''
+        
+    )
+}
+
+export default PostItem

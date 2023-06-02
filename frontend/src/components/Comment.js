@@ -1,0 +1,153 @@
+import React, {useState, useEffect} from 'react'
+import { useDataLayerValue } from '../DataLayer'
+import Reply from './Reply'
+import { truncateStr } from '../utils'
+
+
+const Comment = ({comment, toggleViewUserAccount}) => {
+    
+    const [{currentPost, currentPostComments, user}, dispatch] = useDataLayerValue()
+    // const [replyingUserInfo, setReplyingUserInfo] = useState(null)
+    const [commentReplies, setCommentReplies] = useState([])
+    const [displayReplies, setDisplayReplies] = useState(false)
+
+    const fetchUserInfo = async (id) => {
+        let res = await fetch(`http://localhost:5000/userInfo?id=${id}`)
+        let data = await res.json()
+        if(data.user){
+            return data.user
+        }
+    }
+
+    const fetchReply = async (id) => {
+        let res = await fetch(`http://localhost:5000/getReplies?id=${id}`)
+        let data = await res.json()
+        if(data.replies){
+            return data.replies
+        }
+    }
+
+    const getAndSetCommentReplies = async (id) => {
+        let replies = await fetchReply(comment._id)
+        setCommentReplies(replies)
+    }
+
+    useEffect(() => {
+        // const setRepliedUser = async() => {
+        //     let repliedUser = await fetchUserInfo(comment.replyingUser)
+        //     setReplyingUserInfo(repliedUser)
+        // }
+        // const setReply = async() => {
+        //     let replyData = await fetchReply()
+        //     setReply(replyData)
+        // }
+        // if(comment.isReply){
+            // setRepliedUser()
+        // }
+        // if(isReply){
+        //     setReply()
+        // }
+    },[])
+
+    
+    async function submitReply(){
+        let textInput = document.getElementById(`reply-text${comment._id}`)
+        let text = textInput.value
+        let postID = currentPost._id
+        let months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'] 
+        let day = new Date().getDate()
+        let month = months[new Date().getMonth()]
+        let year = new Date().getFullYear()
+        let hour = new Date().getHours()
+        let minute = new Date().getMinutes()
+
+        let date = `${month} ${day}, ${year}`
+        let time = `${hour}:${minute}`
+
+        let res = await fetch(`http://localhost:5000/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}`)
+        let data = await res.json()
+        if(data.comment){
+            textInput.value = ''
+            comment.replies.push(data.comment._id)
+            console.log(data.comment)
+            if(!displayReplies){
+                setDisplayReplies(true)
+            }
+            await getAndSetCommentReplies()
+            alert('Comment posted!')
+            // if(commentReplies.length > 0){
+            //     let newCommentElement = document.getElementById(`comment-container${commentReplies[commentReplies.length-1]._id}`)
+            //     newCommentElement.scrollIntoView({
+            //         block: 'end'
+            //     })
+            // }
+        }
+    }
+
+
+  return (
+    <div id={`comment-container${comment._id}`}>
+    <div className={`comment ${comment.isReply ? 'reply' : ''}`} >
+        <div className="image" onClick={
+            async () => {
+                let commentingUser = await fetchUserInfo(comment.user)
+                toggleViewUserAccount(commentingUser)
+            }
+        }>
+            <img src="/images1/01.png" alt="" width="100%" height="100%" />
+        </div>
+        <div className="comment-box">
+                <h4>{comment.text}</h4>
+            
+            <p>{comment.date} || {comment.time} || <a id='reply-link'
+                onClick={
+                    () => {
+                        let replyBox = document.getElementById(`reply-box${comment._id}`)
+                        replyBox.classList.toggle('displayReplyBox')
+                        let commentUserImage = document.getElementById(`comment-container${comment._id}`)
+                        commentUserImage.classList.toggle('parentComment')
+                        if(comment.replies.length > 0){
+                            setDisplayReplies(!displayReplies)
+                            getAndSetCommentReplies()
+                        }
+                    }
+                }
+            >{comment.replies.length} Replies</a> </p>
+
+        {user ? 
+        <div className='reply-box' id={`reply-box${comment._id}`}>
+            <div className="input">
+                <textarea id={`reply-text${comment._id}`} name='text' spellCheck={false}></textarea>
+            </div>
+            <div className="submit">
+                <button onClick={
+                    () => {
+                        submitReply()
+                    }}>
+                    <i className='ri-send-plane-2-fill'></i>
+                </button>
+            </div>
+        </div> : ''}
+
+        </div>
+
+    </div>
+    {displayReplies ?
+        <div className='comment-replies' id='comment-replies-cont'>
+            <h3>Replies</h3>
+            {
+                commentReplies.length > 0 ?
+                    commentReplies.map((reply, id) => {
+                        return(
+                            <Comment comment={reply} key ={id} toggleViewUserAccount={toggleViewUserAccount} />
+                        )
+                    })
+                : ''
+            }
+        </div>
+    : ''}
+    </div>
+  )
+}
+
+export default Comment

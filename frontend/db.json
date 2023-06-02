@@ -1,0 +1,22 @@
+{
+  
+  "posts" : [
+    {
+      "title" : "HOW TO TIE QTY",
+      "comtent" : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora accusantium, vitae obcaecati placeat nulla dicta praesentium modi reiciendis magni iste mollitia laudantium, consequuntur suscipit quod ipsum magnam culpa eaque eius.",
+      "date" : "20 March 2023",
+      "time" : "6:15",
+      "commentID" : [1, 3]
+    }
+  ],
+  "comments" : [
+    {
+      "user" : "@John101",
+      "text" : "This was really helpful",
+      "date" : "20 March 2023",
+      "time" : "10:25",
+      "isReply" : false,
+      "replies" : ["1", "4"]
+    }
+  ]
+}
