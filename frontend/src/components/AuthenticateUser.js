@@ -142,6 +142,16 @@ const AuthenticateUser = ({fetchUserPosts}) => {
   return (
     <div className={`account login-register`} id="account">
 
+    <div className="go-back" onClick={
+        () => {
+            let account = document.getElementById('account')
+            account.classList.remove('displayAccount')
+            document.body.classList.remove("no-overflow")
+        }
+    }>
+        <i className='ri-arrow-go-back-fill'></i>
+    </div>
+
     <form action="" method="GET" id='form-login' style={{display:'none'}}>
         <input type="email" name="email" value={'email_login'} />
         <input type="password" name="password" value={'password_login'} />

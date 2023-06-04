@@ -127,24 +127,25 @@ const App = () => {
         return data
       }
 
-    useEffect(() => {
-        const setUser = async() => {
-            let data = await fetchUser()
-            if(data.user){
-                dispatch({
-                    type: 'SET_USER',
-                    user: data.user
-                })
+      const setUser = async() => {
+        let data = await fetchUser()
+        if(data.user){
+            dispatch({
+                type: 'SET_USER',
+                user: data.user
+            })
 
-                let userPostsData = await fetchUserPosts(data.user._id)
-                if(userPostsData.posts){
-                    dispatch({
-                        type: 'SET_USER_POSTS',
-                        posts: userPostsData.posts
-                    })
-                }
+            let userPostsData = await fetchUserPosts(data.user._id)
+            if(userPostsData.posts){
+                dispatch({
+                    type: 'SET_USER_POSTS',
+                    posts: userPostsData.posts
+                })
             }
         }
+    }
+
+    useEffect(() => {
 
         const setPosts = async() => {
             let data = await fetchPosts()
@@ -165,7 +166,7 @@ const App = () => {
     const toggleDisplayAccount = () => {
         let account = document.getElementById('account')
         account.classList.toggle('displayAccount')
-        document.body.classList.toggle('no-overflow')
+        document.body.classList.add('no-overflow')
     }
     
     const toggleViewUserAccount = (user) => {
@@ -184,7 +185,7 @@ const App = () => {
 
     return(
         <>
-            <Header toggleDisplayAccount = {toggleDisplayAccount}/>
+            <Header toggleDisplayAccount = {toggleDisplayAccount} setUser = {setUser} />
             {viewingUser ? <ViewUserAccount toggleViewUserAccount = {toggleViewUserAccount} /> : ''}
             <PostListing/>
             {showAddPost ? <AddPostMobile/> : ''}

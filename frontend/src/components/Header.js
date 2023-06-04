@@ -14,6 +14,7 @@ const Header = (props) => {
 
     return (
         <div className="header">
+
             <div className="logo">
                 <img src={"/images1/logo-clearbit.png"} alt="" width="100%" height = "100%"/>
             </div>

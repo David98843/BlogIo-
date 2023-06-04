@@ -18,11 +18,19 @@ const PostItem = ({post, id}) => {
 
     function normalizePostBody(){
         let body = document.getElementsByTagName('body')[0]
+        let postBody = document.getElementById('post-body')
+        let isMobile = window.innerWidth <= 900;
         window.scrollTo({
             'top': 0,
             'behavior' : 'instant'
         })
-        document.body.classList.add('no-overflow')
+        body.classList.add('no-overflow')
+        if(!isMobile){
+            postBody.scrollTo({
+                'top': 0,
+                'behavior' : 'instant'
+            })
+        }
     }
 
     async function viewPost(){
@@ -50,7 +58,6 @@ const PostItem = ({post, id}) => {
     async function likePost() {
         let postLikes = document.getElementById(`post-likes-${id}`)
         let currLikes = Number(postLikes.innerText)
-        console.log(post.likes)
         if(post.likes.includes(user._id)){
             await fetch(`http://localhost:5000/like?userID=${user._id}&postID=${post._id}&liked=true`)
             let newLikes = post.likes.filter((value) => {
@@ -65,6 +72,8 @@ const PostItem = ({post, id}) => {
             post.likes.unshift(user._id)
         }
         postLikes.innerText = post.likes.length
+        let likeIcon = document.getElementById(`like-icon${post._id}`)
+        likeIcon.classList.toggle('liked')
     }
 
     function displayCommentBox(){
@@ -144,7 +153,7 @@ const PostItem = ({post, id}) => {
                                 }
                             }
                         }>
-                            <i className='las la-heart'></i>
+                            <i className={`las la-heart ${user ? post.likes.includes(user._id) ? 'liked' : '' : ''}`} id={`like-icon${post._id}`}></i>
                             <span id={`post-likes-${id}`}>{post.likes.length}</span> 
                         </div>
 

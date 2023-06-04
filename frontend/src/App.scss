@@ -147,6 +147,16 @@ body{
                     display: block;
                 }
             }
+
+            .icon:nth-of-type(2) {
+                i{
+                    color: gray;
+                }
+
+                .liked{
+                    color: cornflowerblue;
+                }
+            }
         }
     }
 }
@@ -257,12 +267,20 @@ body{
     width:65%;
     position:fixed;
     left: 35%;
-    height: 100%;
+    height: 86vh;
     overflow-y: scroll;
-    top: 10vh;
+    top: 14vh;
     background: whitesmoke;
     z-index: -1;
-    padding-bottom: 25vh;
+    padding-bottom: 7%;
+
+    .read-percent{
+        width: 0%;
+        background: cornflowerblue;
+        height: 5px;
+        top: 0%;
+        position: sticky;
+    }
 
     .go-back{
         position: absolute;
@@ -274,9 +292,11 @@ body{
     }
 
     .title{
-        font-size: 30px;
+        font-size: 27px;
         font-family: $title;
         text-align: center;
+        width: 50%;
+        margin: 5px auto;
     }
 
     .info{
@@ -323,7 +343,14 @@ body{
         font-family: $title;
 
         h4{
-            margin:5px 0px
+            margin:5px 0px;
+            display: flex; 
+            align-items: center;
+            justify-content: safe;
+
+            i{
+                margin: 0px 3px;
+            }
         }
     }
 
@@ -332,9 +359,11 @@ body{
         margin: 20px;
 
         p{
-            font-family: $paragraph;
+            font-family: 'Segoe UI';
             width: 85%;
             font-size: 17px;
+            line-height: 1.5;
+            margin: 15px 0px;
         }
 
         h3{
@@ -496,7 +525,7 @@ body{
         .post-comment-box{
             display: flex;
             align-items: center;
-            width: 50%;
+            width: 55%;
             position: fixed;
             bottom:0;
             background: whitesmoke;
@@ -543,15 +572,6 @@ body{
     }
 }
 
-    .read-percent{
-        position:sticky;
-        top:0;
-        margin:0;
-        padding:0;
-        background: gray;
-        width:0%;
-        height: 10px;
-    }
 
     .comment-displayer-text{
         margin-left: 50px;
@@ -607,6 +627,15 @@ body{
     transition: .2s ease-in;
     overflow-y: auto;
     z-index: 2;
+
+    .go-back{
+        position: absolute;
+        font-size: 25px;
+        border-radius: 50%;
+        right: 10px;
+        padding: 10px;
+        display: none
+    }
 
     .image{
         width:35%;
@@ -913,7 +942,8 @@ body{
 
 .remove{
     opacity:0;
-    z-index: -1;
+    display: none;
+    z-index: -5;
 }
 
 .post-editor{
@@ -1136,6 +1166,7 @@ body{
 }
 
 .bold{
+    font-family: Arial, Helvetica, sans-serif;
     font-weight: bolder;
 }
 
@@ -1418,7 +1449,14 @@ body{
     .account{
         display:none;
         width: 100%;
-        right:0;        
+        right:0;
+        top: 0;
+        height: 100%;
+        z-index: 4;
+
+        .go-back{
+            display: block
+        }    
 
         .post-item{
             .text{
@@ -1434,6 +1472,7 @@ body{
     }
     .view-user{
         left:0;
+        z-index: 10;
         .go-back{
             display: block;
         }
@@ -1450,25 +1489,35 @@ body{
 
     .post-body{
         position: absolute;
-        z-index:1;
+        z-index:5;
         width:100%;
-        height: 80vh;
+        height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        top: 20%;
+        top: 0px;
         left:0;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
-        padding-bottom: 15vh;
+        padding-bottom: 150px;
+        animation-name: slideUp;
+        animation-duration: .5s;
+        animation-iteration-count: 1;
+
+        .title{
+            width: 100%;
+        }
         
         .post-comment{
             position: relative;
 
             .comment{
                 width: 95%;
+                margin-top: 10px;
 
                 .image{
                     max-width: 75px;
+                }
+
+                .comment-box{
+                    margin-top:0;
                 }
 
                 #reply-link{
@@ -1481,6 +1530,7 @@ body{
 
                 .image{
                     padding: 5px;
+                    min-width: 50px;
                     width: 20%;
                 }
             }
@@ -1519,6 +1569,19 @@ body{
             }
         }
     }
+
+    @keyframes slideUp {
+        from{
+            height: 0;
+            top: 100%
+        }
+        to{
+            height: 100%;
+            top: 0;
+        }
+        
+    }
+
     .post-body::-webkit-scrollbar-thumb{
         background: rgb(214, 210, 210);
     }
@@ -1542,6 +1605,10 @@ body{
                 object-fit: cover;
             }
         }
+    }
+
+    .post-item-lazy{
+        width: 90%;
     }
 
 }
@@ -1568,8 +1635,9 @@ body{
     }
     .account{
         left: 40%;
-        height: 80vh;
+        height: 60vh;
         width: 55%;
+        top: 40%;
     }
 
     .view-user{
@@ -1580,6 +1648,7 @@ body{
         top:15vh;
         position:absolute;
         height: 85vh;
+        padding-bottom: 100px;
 
         .info{
             .author{
@@ -1595,7 +1664,6 @@ body{
 
             .comment{
                 width: 50%;
-                border-bottom:  1px solid gray;
 
                 .image{
                     width: 20%;
@@ -1627,10 +1695,8 @@ body{
         left: 5%;
         top: 20%;
 
-        .text-cont{
-            height: 500px;
-        }
         .controls-cont{
+            height: 50%;
             .controls-2, .controls-3{
                 width: 50%;
             }
@@ -1686,24 +1752,24 @@ body{
             }
         }
     }
-    .add-post-mobile{
-        width: 80%;
+    // .add-post-mobile{
+    //     width: 80%;
 
-        .text-cont{
-            width: 100%;
-            height: 50%;
+    //     .text-cont{
+    //         width: 100%;
+    //         height: 50%;
 
-            #mobile-text-area{
-                .text-block{
-                    width: 85%;
-                }
-            }
-        }
+    //         #mobile-text-area{
+    //             .text-block{
+    //                 width: 85%;
+    //             }
+    //         }
+    //     }
 
-        .controls-cont{
-            height: 50%;
-        }
-    }
+    //     .controls-cont{
+    //         height: 50%;
+    //     }
+    // }
 }
 
 

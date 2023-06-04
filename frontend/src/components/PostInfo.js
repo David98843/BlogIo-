@@ -55,8 +55,13 @@ const PostInfo = ({toggleViewUserAccount}) => {
                 </div>
 
                 <div className="date-time">
-                    <h4>March 20, 2023</h4>
-                    <h4>10:25</h4>
+                    <h4>
+                        <i className="ri-calendar-line"></i>
+                        {currentPost.dateCreated}</h4>
+                    <h4>
+                        <i className="ri-timer-line"></i>
+                        {currentPost.time}
+                    </h4>
                 </div>
             </div>
         </>

@@ -185,6 +185,7 @@ const AddPostMobile = () => {
                     type: 'SET_USER_POSTS',
                     posts: [...newUserPosts]
                   })
+                  alert('Post Edited')
                 }else{
                   alert('Server Error')
                 }
@@ -201,9 +202,20 @@ const AddPostMobile = () => {
                         type: 'SET_USER_POSTS',
                         posts: [...userPosts, data.post]
                     })
+                  alert('Post Added')
                 }
             }
         }
+
+        dispatch({
+            type: 'TOGGLE_ADD_POST',
+            currentValue: showAddPost
+        })
+        dispatch({
+            type: 'SET_EDIT_POST',
+            post: null
+        })
+        document.body.classList.remove('no-overflow')
     }
 
     return(

@@ -7,9 +7,25 @@ import {useState} from "react"
 const PostSingle = ({toggleViewUserAccount}) => {
 
     const [{currentPost, displayComments}, dispatch] = useDataLayerValue()
+
+    function showReadPercent(e){
+      let readIndicator = document.querySelector('div.read-percent')
+      let scrollTop = e.target.scrollTop
+      let readPercent
+      if(scrollTop == 0){
+        readPercent = (e.target.scrollTop) / e.target.scrollHeight * 100        
+      }else{
+        readPercent = (e.target.scrollTop + e.target.clientHeight) / e.target.scrollHeight * 100        
+      }
+      readIndicator.style.width = `${readPercent}%`
+    }
     
   return (
-    <div className='post-body' id='post-body' 
+    <div className='post-body' id='post-body' onScroll={
+      (e) => {
+        showReadPercent(e)
+      }
+    }
     >
         <div className="read-percent"></div>
         <div className="go-back" onClick={

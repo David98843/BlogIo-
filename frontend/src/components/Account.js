@@ -75,6 +75,15 @@ const Account = ({toggleDisplayAccount}) => {
     
   return (
     <div className={`account`} id='account'>
+        <div className="go-back" onClick={
+          () => {
+                let account = document.getElementById('account')
+                account.classList.remove('displayAccount')
+                document.body.classList.remove("no-overflow")
+            }
+        }>
+          <i className='ri-arrow-go-back-fill'></i>
+        </div>
 
         <div className="image">
             <img src="/images1/01.png" alt="user image" width={'100%'} height= {'100%'}/>

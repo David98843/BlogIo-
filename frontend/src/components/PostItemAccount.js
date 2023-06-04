@@ -3,13 +3,47 @@ import { truncateStr } from '../utils'
 import { useDataLayerValue } from '../DataLayer'
 
 const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
-  const [{editPost, showAddPost}, dispatch] = useDataLayerValue()
+  const [{editPost, showAddPost, posts, userPosts}, dispatch] = useDataLayerValue()
+
+  const deletePost = async () => {
+    let confirmDelete = window.confirm('This action cannot be reversed')
+    if(confirmDelete)
+        await deleteFromServer()
+    async function deleteFromServer(){ 
+        let res = await fetch(`http://localhost:5000/deletePost?id=${post._id}`)
+        let data = await res.json()
+        if(data.message === 'success'){
+            dispatch({
+                type: 'SET_POST',
+                posts: [...posts.filter(valPost => {
+                    return valPost._id === post._id ? '' : valPost
+                })]
+            })
+
+            // let currentPostElement = document.getElementById(`post-item${post._id}`)
+            // let currentPostElementParent = currentPostElement.parentNode
+            // currentPostElementParent.removeChild(currentPostElement)
+
+            dispatch({
+                type: 'SET_USER_POSTS',
+                posts: [...userPosts.map(valPost => {
+                    return valPost._id === post._id ? '' : valPost
+                })]
+            })
+        }
+    }
+  } 
+
+
   return (
-        <div className="post-item">
+    post ? 
+        <div className="post-item" id={`post-item${post._id}`}>
             {editable ?
             <div className="options-icons">
                 <div className="icons">
-                    <div className="icon">
+                    <div className="icon" onClick = {
+                        () => deletePost()
+                    }>
                         <i className='las la-trash'></i>
                     </div>
                     <div className="icon" onClick={
@@ -84,6 +118,7 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
             </div>
                 
         </div>
+        : ''
   )
 }
 

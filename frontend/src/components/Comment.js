@@ -6,7 +6,7 @@ import { truncateStr } from '../utils'
 
 const Comment = ({comment, toggleViewUserAccount}) => {
     
-    const [{currentPost, currentPostComments, user}, dispatch] = useDataLayerValue()
+    const [{currentPost, currentPostComments, user, viewingUser}, dispatch] = useDataLayerValue()
     // const [replyingUserInfo, setReplyingUserInfo] = useState(null)
     const [commentReplies, setCommentReplies] = useState([])
     const [displayReplies, setDisplayReplies] = useState(false)
@@ -91,7 +91,14 @@ const Comment = ({comment, toggleViewUserAccount}) => {
         <div className="image" onClick={
             async () => {
                 let commentingUser = await fetchUserInfo(comment.user)
-                toggleViewUserAccount(commentingUser)
+                if(viewingUser){
+                    dispatch({
+                        type: 'SET_VIEWING_USER',
+                        user: commentingUser
+                    })
+                }else{
+                    toggleViewUserAccount(commentingUser)
+                }
             }
         }>
             <img src="/images1/01.png" alt="" width="100%" height="100%" />
