@@ -155,13 +155,9 @@ const App = () => {
                 user: userData
             })
 
-            let userPostsData = await fetchUserPosts(userData)
-            if(userPostsData.posts){
-                dispatch({
-                    type: 'SET_USER_POSTS',
-                    posts: userPostsData.posts
-                })
-            }
+            // let userPostsData = await fetchUserPosts(userData)
+            // if(userPostsData.posts){
+            // }
         }
     }
 
@@ -171,6 +167,10 @@ const App = () => {
             dispatch({
                 type: 'SET_POST',
                 posts: data
+            })
+            dispatch({
+                type: 'SET_USER_POSTS',
+                posts: posts.filter(value => value.author === user)
             })
         }
 
@@ -184,7 +184,8 @@ const App = () => {
 
 
 
-    const toggleDisplayAccount = () => {
+    const toggleDisplayAccount = async () => {
+        await setUser()
         let account = document.getElementById('account')
         account.classList.toggle('displayAccount')
         if(user){

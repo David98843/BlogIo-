@@ -603,6 +603,14 @@ body {
   font-size: 25px;
   color: whitesmoke;
 }
+.account .no-posts {
+  width: 80%;
+  background: cornflowerblue;
+  font-size: 20px;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  padding: 10px;
+  margin: 10px auto;
+}
 .account .post-item {
   flex-flow: row;
   align-items: center;
@@ -1052,15 +1060,17 @@ body {
   display: none;
   flex-flow: column;
   width: 100%;
-  height: 80%;
+  height: 100%;
   background: whitesmoke;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   position: absolute;
-  top: 20%;
+  top: 0%;
   z-index: 5;
   background: whitesmoke;
   box-shadow: -5px -5px 15px rgba(240, 236, 236, 0.568), 5px 5px 10px rgba(24, 23, 23, 0.575);
+  animation-name: slideUp;
+  animation-duration: 0.4s;
 }
 .add-post-mobile .go-back {
   margin: 10px;
@@ -1137,7 +1147,7 @@ body {
 .add-post-mobile .controls-cont {
   width: 100%;
   height: 40%;
-  display: none;
+  display: flex;
   flex-flow: column;
   background: whitesmoke;
   align-items: center;
@@ -1246,7 +1256,7 @@ body {
   border: 2px solid #4a70e2;
 }
 .add-post-mobile .show-controls-cont {
-  display: flex;
+  display: none;
 }
 
 @media screen and (min-width: 100px) and (max-width: 900px) {
@@ -1429,9 +1439,9 @@ body {
     left: 5%;
   }
   .post-body {
-    top: 15vh;
+    top: 0vh;
     position: absolute;
-    height: 85vh;
+    height: 100vh;
     padding-bottom: 100px;
   }
   .post-body .info .author {

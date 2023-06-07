@@ -31,6 +31,10 @@ const PostItem = ({post, id}) => {
                 'behavior' : 'instant'
             })
         }
+        dispatch({
+            type: 'SET_COMMENTS',
+            comments: []
+        })
     }
 
     async function viewPost(){
@@ -89,7 +93,6 @@ const PostItem = ({post, id}) => {
                 <div className="image"
                 onClick={ 
                     () => {
-
                         if(user){
                             viewPost()
                         }else{

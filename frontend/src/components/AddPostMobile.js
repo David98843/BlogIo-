@@ -164,43 +164,47 @@ const AddPostMobile = () => {
             alert('No way')
         }else{
             if(editPost){
-                let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
-                let data = await res.json()
-        
-                if(data.message === 'success'){
-                  let updatedPost = data.post
-                  let newPosts = posts.map(post => {
-                    return post._id === editPost._id ? updatedPost : post
-                  })
-                  let newUserPosts = userPosts.map(post => {
-                    return post._id === editPost._id ? updatedPost : post
-                  })
-                  dispatch({
-                    type : 'SET_POST',
-                    posts : [...newPosts]
-                  })
-                  dispatch({
-                    type: 'SET_USER_POSTS',
-                    posts: [...newUserPosts]
-                  })
-                  alert('Post Edited')
-                }else{
-                  alert('Server Error')
+                if(content_html.length > 2){
+                    let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
+                    let data = await res.json()
+            
+                    if(data.message === 'success'){
+                      let updatedPost = data.post
+                      let newPosts = posts.map(post => {
+                        return post._id === editPost._id ? updatedPost : post
+                      })
+                      let newUserPosts = userPosts.map(post => {
+                        return post._id === editPost._id ? updatedPost : post
+                      })
+                      dispatch({
+                        type : 'SET_POST',
+                        posts : [...newPosts]
+                      })
+                      dispatch({
+                        type: 'SET_USER_POSTS',
+                        posts: [...newUserPosts]
+                      })
+                      alert('Post Edited')
+                    }else{
+                      alert('Server Error')
+                    }
                 }
 
             }else{
-                let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
-                let data = await res.json()
-                if(data.message === 'success'){
-                    dispatch({
-                        type: 'SET_POST',
-                        posts: [...posts, data.post]
-                    })
-                    dispatch({
-                        type: 'SET_USER_POSTS',
-                        posts: [...userPosts, data.post]
-                    })
-                  alert('Post Added')
+                if(content_html.length > 2){
+                    let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
+                    let data = await res.json()
+                    if(data.message === 'success'){
+                        dispatch({
+                            type: 'SET_POST',
+                            posts: [...posts, data.post]
+                        })
+                        dispatch({
+                            type: 'SET_USER_POSTS',
+                            posts: [...userPosts, data.post]
+                        })
+                      alert('Post Added')
+                    }
                 }
             }
         }

@@ -3,7 +3,7 @@ import { useDataLayerValue } from '../DataLayer'
 import UserPosts from './UserPosts'
 
 const Account = ({toggleDisplayAccount}) => {
-    const [{user, userPosts, showAddPost, userInfo}, dispatch] = useDataLayerValue()
+    const [{user, userInfo, userPosts, showAddPost, posts}, dispatch] = useDataLayerValue()
     const [displayUserPost, setDisplayUserPost] = useState(false)
      
     const editName = () => {
@@ -17,12 +17,12 @@ const Account = ({toggleDisplayAccount}) => {
             if(newName.length === 0 || typeof newName === undefined){
                 name_input.innerText = userInfo.name
             }else{
-                let newUser = {...user, name : newName}
+                let newUser = {...userInfo, name : newName}
                 await fetch(`http://localhost:5000/edit?field=name&value=${encodeURI(newName)}`)
 
                 dispatch({
-                    type: 'SET_USER',
-                    user: newUser
+                    type: 'SET_USER_INFO',
+                    userInfo: newUser
                 })
             }
             
@@ -51,13 +51,13 @@ const Account = ({toggleDisplayAccount}) => {
 
             bio_input.setAttribute('contenteditable', false)
             let newBio = e.target.innerText.trim()
-            let newUser = {...user, bio: newBio}
+            let newUser = {...userInfo, bio: newBio}
             await fetch(`http://localhost:5000/edit?field=bio&value=${encodeURI(newBio)}`)
 
 
             dispatch({
-                type: 'SET_USER',
-                user: newUser
+                type: 'SET_USER_INFO',
+                userInfo: newUser
             })
         }
 
@@ -101,16 +101,21 @@ const Account = ({toggleDisplayAccount}) => {
         </div>
 
         <div className="stats">
-            <div className="stat" onClick = {
+            <div className="stat"  onClick={
                 () => {
-                    setDisplayUserPost(!displayUserPost)
+                    dispatch({
+                        type: 'TOGGLE_ADD_POST',
+                        currentValue: showAddPost
+                    })
+                    toggleDisplayAccount()
+                    document.body.classList.add('no-overflow')
                 }
             }>
                 <div className="stat-icon">
                     <i className='ri-text-wrap'></i>
                 </div>
                 <div className="stat-text">
-                    <h3>{userPosts.length} Posts</h3>
+                    <h3>{posts.filter(value => value.author === user).length} Posts</h3>
                 </div>
             </div>
 
@@ -118,7 +123,7 @@ const Account = ({toggleDisplayAccount}) => {
                 const followFunction = async () => {
                         
                     let newUser = {
-                        ...user,
+                        ...userInfo,
                     }
                     if(userInfo.followers.includes(user)){
                         let newFollowers = userInfo.followers.filter((value) => {
@@ -129,8 +134,8 @@ const Account = ({toggleDisplayAccount}) => {
                         newUser.followers.push(user)
                     }
                     dispatch({
-                        type: 'SET_USER',
-                        user: newUser
+                        type: 'SET_USER_INFO',
+                        userInfo: newUser
                     })
 
                     let res = await fetch(`http://localhost:5000/follow?followed=${user}&followed_by=${user}`)
@@ -146,16 +151,7 @@ const Account = ({toggleDisplayAccount}) => {
                 </div>
             </div>
 
-            <div className="stat" onClick={
-                () => {
-                    dispatch({
-                        type: 'TOGGLE_ADD_POST',
-                        currentValue: showAddPost
-                    })
-                    toggleDisplayAccount()
-                    document.body.classList.add('no-overflow')
-                }
-            }>
+            <div className="stat">
             
                 <div className="stat-icon">
                     <i className='ri-thumb-up-fill'></i>

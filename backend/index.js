@@ -31,9 +31,9 @@ app.use(passport.session())
 let DB_STRING_PROD = `mongodb+srv://Dave:${encodeURIComponent(process.env.DB_PASSWORD)}@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority`
 
 if(app.get('env') == 'development'){
-    DB_STRING = DB_STRING_PROD
+    DB_STRING = process.env.DB_DEV
 }else{
-    DB_STRING = null
+    DB_STRING = DB_STRING_PROD
 }
 mongoose.connect(DB_STRING, {
     useNewUrlParser: true
