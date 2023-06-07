@@ -334,3 +334,5 @@ app.get('/like', async(req, res, next) => {
 
 const PORT = process.env.PORT || 30
 app.listen(PORT, console.log(`App started on PORT ${PORT}`))
+
+module.exports = app
