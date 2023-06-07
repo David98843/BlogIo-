@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
     "version": 2,
     "builds": [
         {
@@ -14,10 +13,3 @@
         }
     ]
 }
-=======
-  "rewrites" : [{
-    "source" : "/api/(.*)",
-    "destination": "/api"
-  }]
-}
->>>>>>> bca1edcd0c50b6da5e1b97dd21222b1c83388a52
