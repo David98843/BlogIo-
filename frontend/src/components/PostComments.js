@@ -45,7 +45,7 @@ const PostComments = ({toggleViewUserAccount}) => {
       // let newCurrentPostComments = [...currentPostComments, newComment]
       // console.log(newCurrentPostComments)
   
-      let res = await fetch(`http://localhost:5000/comment?text=${text}&postID=${postID}&date=${date}&time=${time}`)
+      let res = await fetch(`http://localhost:5000/comment?text=${text}&postID=${postID}&date=${date}&time=${time}&user=${user}`)
       let data = await res.json()
       if(data.comment){
         dispatch({

@@ -107,13 +107,28 @@ import React,{
 
 const App = () => {
 
-    const [{user, posts, currentPost, viewingUser, userPosts, showAddPost}, dispatch] = useDataLayerValue()
+    const [{user, userInfo, posts, currentPost, viewingUser, userPosts, showAddPost, displayUserAccount}, dispatch] = useDataLayerValue()
 
-    const fetchUser = async () => {
-        const res = await fetch('http://localhost:5000/verifyLogin')
-        const data = await res.json()
-        return data
+    const getUser = () => {
+        // const res = await fetch('http://localhost:5000/verifyLogin')
+        let user = window.localStorage.getItem('user')
+        // const data = await res.json()
+        // return data
+        if(user){
+            return user
+        }else{
+            return null
+        }
     }
+
+    const fetchUserInfo = async (id) => {
+        let res = await fetch(`http://localhost:5000/userInfo?id=${id}`)
+        let data = await res.json()
+        if(data.message === 'success'){
+            return data.user
+        }
+    }
+
 
     const fetchPosts = async () => {
         const res = await fetch('http://localhost:5000/allPost')
@@ -128,14 +143,19 @@ const App = () => {
       }
 
       const setUser = async() => {
-        let data = await fetchUser()
-        if(data.user){
+        let userData = getUser()
+        if(userData){
+            let userInfoData = await fetchUserInfo(userData)
+            dispatch({
+                type: 'SET_USER_INFO',
+                userInfo: userInfoData
+            })
             dispatch({
                 type: 'SET_USER',
-                user: data.user
+                user: userData
             })
 
-            let userPostsData = await fetchUserPosts(data.user._id)
+            let userPostsData = await fetchUserPosts(userData)
             if(userPostsData.posts){
                 dispatch({
                     type: 'SET_USER_POSTS',
@@ -146,7 +166,6 @@ const App = () => {
     }
 
     useEffect(() => {
-
         const setPosts = async() => {
             let data = await fetchPosts()
             dispatch({
@@ -155,17 +174,25 @@ const App = () => {
             })
         }
 
+        const setUSER = async () => {
+            await setUser()
+        }
 
-        setUser()
+        setUSER()
         setPosts()
     },[])
 
 
-    console.log(posts)
 
     const toggleDisplayAccount = () => {
         let account = document.getElementById('account')
         account.classList.toggle('displayAccount')
+        if(user){
+            dispatch({
+                type: 'TOGGLE_DISPLAY_USER',
+                currentValue: displayUserAccount
+            })
+        }
         document.body.classList.add('no-overflow')
     }
     
@@ -191,7 +218,7 @@ const App = () => {
             {showAddPost ? <AddPostMobile/> : ''}
             {currentPost ? <PostSingle toggleViewUserAccount = {toggleViewUserAccount} /> : ''}
             {showAddPost ? <AddPost/> : ''}
-            {user ? <Account toggleDisplayAccount={toggleDisplayAccount} /> : <AuthenticateUser fetchUserPosts={fetchUserPosts} />}
+            {userInfo ? <Account toggleDisplayAccount={toggleDisplayAccount} />  : <AuthenticateUser fetchUserPosts={fetchUserPosts} toggleDisplayAccount={toggleDisplayAccount} />}
         </>
     )
 }

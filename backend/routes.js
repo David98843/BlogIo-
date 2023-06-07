@@ -57,13 +57,7 @@ const router = express.Router()
 
 
 router.get('/login', async (req, res, next) => {
-    // const {email, password} = req.query
-    // console.log(req.query)
-    // passport.authenticate('local', {
-    //     successRedirect : '/verifyLogin',
-    //     failureRedirect : '/verifyLogin',
-    //     failureFlash : false, 
-    // })(req, res, next)
+
     const {email, password} = req.query
     
     const theUser = await User.findOne({email})
@@ -79,7 +73,7 @@ router.get('/login', async (req, res, next) => {
                 loggedInUser = theUser
                 res.json({
                     message: "success",
-                    user: theUser
+                    user: theUser._id
                 })
                 next()
             }else{
@@ -91,65 +85,32 @@ router.get('/login', async (req, res, next) => {
     }
 })
 
-router.get('/verifyLogin', (req, res) => {
-    console.log('VERIFYING',loggedInUser)
-    if(loggedInUser){
-        res.json({
-            message: "success",
-            user: loggedInUser
-        })
-    }else{
-        res.json({
-            message: "Login details incorrect"
-        })
-    }
-})
-router.get('/confirmUser', (req, res) => {
-    
-    if(loggedInUser){
-        res.json({
-            message: 'success',
-            user: loggedInUser
-        })
-    }else{
-        res.json({
-            message: "User not logged in",
-        })
-    }
-})
-
 router.get('/edit', async(req,res, next) => {
-    if(!loggedInUser){
-        res.json({
-            message: 'user is not logged in'
+
+    const {field, value, user} = req.query
+    if(field.toLowerCase() == 'name'){
+        await User.findByIdAndUpdate(user,{
+            name : value
         })
-    }else{
-        const {field, value} = req.query
-        if(field.toLowerCase() == 'name'){
-            await User.findByIdAndUpdate(loggedInUser._id,{
-                name : value
-            })
-            loggedInUser.name = value
-        }else if(field.toLowerCase() == 'bio'){
-            await User.findByIdAndUpdate(loggedInUser._id,{
-                bio: value
-            })
-            loggedInUser.bio = value
-        }
+        // loggedInUser.name = value
+    }else if(field.toLowerCase() == 'bio'){
+        await User.findByIdAndUpdate(user,{
+            bio: value
+        })
+        // loggedInUser.bio = value
     }
 })
 
 router.get('/addPost', async (req, res) => {
-    const {title, content, contentText,contentHTML, dateCreated, time} = req.query
-    console.log(decodeURIComponent(contentHTML))
+    const {title, content, contentText,contentHTML, dateCreated, time, user} = req.query
     const newPost = Post({
         title,
         content,
         contentText,
         contentHTML,
-        author: loggedInUser._id,
+        author: user,
         dateCreated,
-        time
+        time,
     })
     try{
         await newPost.save()
@@ -163,13 +124,13 @@ router.get('/addPost', async (req, res) => {
 })
 
 router.get('/editPost', async(req, res) => {
-    const {title, content, contentText,contentHTML, dateCreated, time, postID} = req.query
+    const {title, content, contentText,contentHTML, dateCreated, time, postID, user} = req.query
     await Post.findOneAndUpdate({_id:postID}, {
         title,
         content,
         contentText,
         contentHTML,
-        author: loggedInUser._id,
+        author: user,
         dateCreated,
         time
     })
@@ -196,7 +157,6 @@ router.get('/allPost', async (req, res) => {
 router.get('/userInfo', async(req, res) => {
     const {id} = req.query
     let theUser = await User.findOne({_id:id})
-    console.log('Posted By',theUser)
     if(theUser){
         res.json({
             message : "success",
@@ -269,7 +229,6 @@ router.get('/getComments', async(req, res) => {
 router.get('/getReplies', async(req, res) => {
     const {id} = req.query
     const theReplies = await Comment.find({replyingComment: id})
-    console.log(theReplies)
     res.json({
         message: "success",
         replies: theReplies
@@ -281,13 +240,13 @@ router.get('/deleteComments', async(req, res) => {
 })
 
 router.get('/comment', async(req, res) => {
-    const {text, postID, date, time} = req.query
+    const {text, postID, date, time, user} = req.query
     let newComment = Comment({
         text,
         postID,
         date,
         time,
-        user: loggedInUser
+        user
     })
     await newComment.save()
     res.json({
@@ -297,21 +256,21 @@ router.get('/comment', async(req, res) => {
 })
 
 router.get('/reply', async(req, res) => {
-    const {text, postID, date, time, commentID, replyingUser} = req.query
+    const {text, postID, date, time, commentID, replyingUser, user} = req.query
     let newReply = Comment({
         text,
         date,
         time,
         postID,
         isReply: true,
-        user: loggedInUser,
+        user,
         replyingUser,
         replyingComment: commentID,
         replies : []
     })
     await newReply.save()
     let theComment = await Comment.findOne({_id: commentID})
-    let updatedComment = await Comment.findOneAndUpdate({_id: commentID},{
+    await Comment.findOneAndUpdate({_id: commentID},{
         replies: [...theComment.replies, newReply._id]
     })
     res.json({
@@ -352,15 +311,11 @@ router.get('/like', async(req, res, next) => {
     })
 })
 
-router.get('/logout',(req, res) => {
-    loggedInUser = {}
-    res.json({
-        message: 'Logout Successful',
-    })
-    // req.logout(() => {
-    //     
-    // })
-    
-})
+// router.get('/logout',(req, res) => {
+//     loggedInUser = {}
+//     res.json({
+//         message: 'Logout Successful',
+//     })    
+// })
 
 module.exports = router

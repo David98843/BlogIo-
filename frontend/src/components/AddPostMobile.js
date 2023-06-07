@@ -3,7 +3,7 @@ import { useDataLayerValue } from '../DataLayer'
 
 const AddPostMobile = () => {
     let selected = null
-    const [{posts, userPosts, editPost, showAddPost}, dispatch] = useDataLayerValue()
+    const [{user, posts, userPosts, editPost, showAddPost}, dispatch] = useDataLayerValue()
 
     const displayCurrentMobileHTML = () => {
         let displayArea = document.getElementById('mobile-text-area')
@@ -99,8 +99,6 @@ const AddPostMobile = () => {
         let sel_range = selection.getRangeAt(0)
         let parentBlock = selection.focusNode.parentElement
 
-        console.log(parentBlock)
-
         if(parentBlock.classList.contains('mobile-text-area') || parentBlock.classList.contains('text-block')){
         newElem.innerText = sel_range.toString()
         sel_range.deleteContents()
@@ -166,7 +164,7 @@ const AddPostMobile = () => {
             alert('No way')
         }else{
             if(editPost){
-                let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}`)
+                let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
                 let data = await res.json()
         
                 if(data.message === 'success'){
@@ -191,7 +189,7 @@ const AddPostMobile = () => {
                 }
 
             }else{
-                let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}`)
+                let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
                 let data = await res.json()
                 if(data.message === 'success'){
                     dispatch({

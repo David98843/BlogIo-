@@ -39,7 +39,16 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
     post ? 
         <div className="post-item" id={`post-item${post._id}`}>
             {editable ?
-            <div className="options-icons">
+            <>
+            <div className="display-option-icons" onClick={
+                () => {
+                    let optionIcons = document.getElementById(`options-icons-${post._id}`)
+                    optionIcons.classList.toggle('show-option-icons')
+                }
+            }>
+                <i className='las la-ellipsis-h'></i>
+            </div>
+            <div className="options-icons" id ={`options-icons-${post._id}`}>
                 <div className="icons">
                     <div className="icon" onClick = {
                         () => deletePost()
@@ -71,7 +80,9 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
                         <i className='las la-edit'></i>
                     </div>
                 </div>
-            </div>  : ''}
+            </div>  
+            </>
+            : ''}
 
             <div className="image"
             onClick={() => {

@@ -35,17 +35,17 @@ const PostItem = ({post, id}) => {
 
     async function viewPost(){
 
-        if(!post.views.includes(user._id)){
+        if(!post.views.includes(user)){
             dispatch({
                 type: 'SET_CURRENT_POST',
                 post: {
                     ...post, 
-                    views:post.views.unshift(user._id)
+                    views:post.views.unshift(user)
                 }
             })
             let postViews = document.getElementById(`post-views-${id}`)
             postViews.innerText = 1
-            await fetch(`http://localhost:5000/view?userID=${user._id}&postID=${post._id}&viewed=false`)
+            await fetch(`http://localhost:5000/view?userID=${user}&postID=${post._id}&viewed=false`)
         }else{
             dispatch({
                 type: 'SET_CURRENT_POST',
@@ -58,18 +58,18 @@ const PostItem = ({post, id}) => {
     async function likePost() {
         let postLikes = document.getElementById(`post-likes-${id}`)
         let currLikes = Number(postLikes.innerText)
-        if(post.likes.includes(user._id)){
-            await fetch(`http://localhost:5000/like?userID=${user._id}&postID=${post._id}&liked=true`)
+        if(post.likes.includes(user)){
+            await fetch(`http://localhost:5000/like?userID=${user}&postID=${post._id}&liked=true`)
             let newLikes = post.likes.filter((value) => {
-                return value == user._id ? '' : value
+                return value == user ? '' : value
             })
             post = {
                 ...post, 
                 likes: [...newLikes]
             }
         }else{
-            await fetch(`http://localhost:5000/like?userID=${user._id}&postID=${post._id}&liked=false`)
-            post.likes.unshift(user._id)
+            await fetch(`http://localhost:5000/like?userID=${user}&postID=${post._id}&liked=false`)
+            post.likes.unshift(user)
         }
         postLikes.innerText = post.likes.length
         let likeIcon = document.getElementById(`like-icon${post._id}`)
@@ -153,7 +153,7 @@ const PostItem = ({post, id}) => {
                                 }
                             }
                         }>
-                            <i className={`las la-heart ${user ? post.likes.includes(user._id) ? 'liked' : '' : ''}`} id={`like-icon${post._id}`}></i>
+                            <i className={`las la-heart ${user ? post.likes.includes(user) ? 'liked' : '' : ''}`} id={`like-icon${post._id}`}></i>
                             <span id={`post-likes-${id}`}>{post.likes.length}</span> 
                         </div>
 

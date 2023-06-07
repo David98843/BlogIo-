@@ -32,23 +32,6 @@ const Comment = ({comment, toggleViewUserAccount}) => {
         setCommentReplies(replies)
     }
 
-    useEffect(() => {
-        // const setRepliedUser = async() => {
-        //     let repliedUser = await fetchUserInfo(comment.replyingUser)
-        //     setReplyingUserInfo(repliedUser)
-        // }
-        // const setReply = async() => {
-        //     let replyData = await fetchReply()
-        //     setReply(replyData)
-        // }
-        // if(comment.isReply){
-            // setRepliedUser()
-        // }
-        // if(isReply){
-        //     setReply()
-        // }
-    },[])
-
     
     async function submitReply(){
         let textInput = document.getElementById(`reply-text${comment._id}`)
@@ -64,17 +47,15 @@ const Comment = ({comment, toggleViewUserAccount}) => {
         let date = `${month} ${day}, ${year}`
         let time = `${hour}:${minute}`
 
-        let res = await fetch(`http://localhost:5000/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}`)
+        let res = await fetch(`http://localhost:5000/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}&user=${user}`)
         let data = await res.json()
         if(data.comment){
             textInput.value = ''
             comment.replies.push(data.comment._id)
-            console.log(data.comment)
             if(!displayReplies){
                 setDisplayReplies(true)
             }
             await getAndSetCommentReplies()
-            alert('Comment posted!')
             // if(commentReplies.length > 0){
             //     let newCommentElement = document.getElementById(`comment-container${commentReplies[commentReplies.length-1]._id}`)
             //     newCommentElement.scrollIntoView({

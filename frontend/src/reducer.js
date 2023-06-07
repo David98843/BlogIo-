@@ -1,5 +1,6 @@
 export const initialState = {
     user : null,
+    userInfo: null,
     userPosts : [],
     viewingUser: null,
     posts: [],
@@ -7,7 +8,8 @@ export const initialState = {
     currentPostComments: [],
     editPost: null,
     showAddPost: false,
-    displayComments: false
+    displayComments: false,
+    displayUserAccount: false
 }
 
 const reducer = (state, action) => {
@@ -16,6 +18,11 @@ const reducer = (state, action) => {
             return{
                 ...state,
                 user: action.user
+            }
+        case 'SET_USER_INFO':
+            return{
+                ...state,
+                userInfo: action.userInfo
             }
         case 'SET_USER_POSTS':
             return{
@@ -56,6 +63,12 @@ const reducer = (state, action) => {
             return{
                 ...state,
                 displayComments: !action.currentValue
+            }
+
+        case 'TOGGLE_DISPLAY_USER':
+            return{
+                ...state,
+                displayUserAccount: !action.currentValue
             }
         default:
             return state

@@ -1,7 +1,7 @@
 import {React, useState} from "react"
 import {useDataLayerValue} from './../DataLayer'
 
-const AuthenticateUser = ({fetchUserPosts}) => {
+const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
     const [name_register, setName] = useState()
     const [email_register, setEmailRegister] = useState()
     const [password_register, setPasswordRegister] = useState()
@@ -121,17 +121,32 @@ const AuthenticateUser = ({fetchUserPosts}) => {
             let res = await fetch(`http://localhost:5000/login?email=${encodeURIComponent(email_login)}&password=${encodeURIComponent(password_login)}`)
             let data = await res.json()
             if(data.message == 'success'){
+
+                let userInfoRes = await fetch(`http://localhost:5000/userInfo?id=${encodeURIComponent(data.user)}`)
+                let userInfoData = await userInfoRes.json()
+
+                dispatch({
+                    type: 'SET_USER_INFO',
+                    userInfo: userInfoData.user
+                })
+
                 dispatch({
                     type: 'SET_USER',
                     user: data.user
                 })
-                let userPostsData = await fetchUserPosts(data.user._id)
+
+                let userPostsData = await fetchUserPosts(data.user)
+                window.localStorage.setItem('user', data.user)
+
                 if(userPostsData.posts){
                     dispatch({
                         type: 'SET_USER_POSTS',
                         posts: userPostsData.posts
                     })
                 }
+
+                toggleDisplayAccount()
+
             }else{
                 error_cont.innerHTML = data.message
             }

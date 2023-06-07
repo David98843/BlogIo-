@@ -71,20 +71,20 @@ const ViewUserAccount = () => {
                         let newViewingUser = {
                             ...viewingUser,
                         }
-                        if(viewingUser.followers.includes(user._id)){
+                        if(viewingUser.followers.includes(user)){
                             let newFollowers = viewingUser.followers.filter((value) => {
-                                return String(value) === String(user._id) ? '' : value
+                                return String(value) === String(user) ? '' : value
                             })
                             newViewingUser.followers = newFollowers
                         }else{
-                            newViewingUser.followers.push(user._id)
+                            newViewingUser.followers.push(user)
                         }
                         dispatch({
                             type: 'SET_VIEWING_USER',
                             user: newViewingUser
                         })
 
-                        let res = await fetch(`http://localhost:5000/follow?followed=${viewingUser.id}&followed_by=${user._id}`)
+                        let res = await fetch(`http://localhost:5000/follow?followed=${viewingUser.id}&followed_by=${user}`)
                         let data = await res.json()
                         if(data.message === 'success'){
                         }else{}
@@ -95,7 +95,7 @@ const ViewUserAccount = () => {
             }>
                 {/* 'ri-user-3-fill' */}
                 <div className="stat-icon">
-                    <i className = {`${viewingUser.followers.includes(String(user._id)) ? 'ri-user-follow-fill' : 'ri-user-fill'}`} ></i>
+                    <i className = {`${viewingUser.followers.includes(String(user)) ? 'ri-user-follow-fill' : 'ri-user-fill'}`} ></i>
                 </div>
                 <div className="stat-text">
                     <h3>{viewingUser.followers.length} Followers</h3>

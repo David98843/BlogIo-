@@ -4,10 +4,14 @@ const Header = (props) => {
     const[{user}, dispatch] = useDataLayerValue()
 
     async function logOut(){
-        await fetch('http://localhost:5000/logout')
+        window.localStorage.removeItem('user')
         dispatch({
-            type : "SET_USER",
-            user : null
+            type: 'SET_USER',
+            user: null
+        })
+        dispatch({
+            type: 'SET_USER_INFO',
+            userInfo: null
         })
     }
 

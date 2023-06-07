@@ -90,7 +90,6 @@ const AddPost = () => {
     let selection = document.getSelection()
     let sel_range = selection.getRangeAt(0)
     let text_block = selection.focusNode.parentElement
-    console.log(text_block)
     if(text_block.classList.contains('display-area') || text_block.classList.contains('text-block')){
       newElem.innerText = sel_range.toString()
       sel_range.deleteContents()
@@ -159,9 +158,6 @@ const AddPost = () => {
       content_html += `<div class = '${String(child.classList)}' id = '${randID}'>${child.innerHTML}</div>`
     }
 
-    // console.log(content,'////n')
-    // console.log(content_html)
-
     return {
       content, 
       content_html,
@@ -185,7 +181,7 @@ const AddPost = () => {
     }else{
 
       if(editPost){
-        let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}`)
+        let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
         let data = await res.json()
 
         if(data.message === 'success'){
@@ -210,7 +206,7 @@ const AddPost = () => {
 
 
       }else{
-        let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}`)
+        let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
         let data = await res.json()
 
         if(data.message === 'success'){
@@ -311,22 +307,13 @@ const AddPost = () => {
             <label htmlFor="post-image">Post Image</label>
             <input type="file" name='post-image' id='post-image' form ='post-form' 
             onInput={e => {
-              console.log(e)
               if(!e.target.files[0].type.startsWith('image')){
                 alert('Please selected a valid image!')
                 setImageErr(true)
               }else{
                 setImageErr(false)
               }
-            }}
-
-            onChange = {
-              e => {
-                console.log(e)
-              }
-            }
-            
-            
+            }}           
             />
           </div>
 

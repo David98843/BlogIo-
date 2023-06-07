@@ -1,9 +1,9 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import UserPosts from './UserPosts'
 
 const Account = ({toggleDisplayAccount}) => {
-    const [{user, userPosts, showAddPost}, dispatch] = useDataLayerValue()
+    const [{user, userPosts, showAddPost, userInfo}, dispatch] = useDataLayerValue()
     const [displayUserPost, setDisplayUserPost] = useState(false)
      
     const editName = () => {
@@ -15,7 +15,7 @@ const Account = ({toggleDisplayAccount}) => {
             let newName = e.target.innerText.trim()
 
             if(newName.length === 0 || typeof newName === undefined){
-                name_input.innerText = user.name
+                name_input.innerText = userInfo.name
             }else{
                 let newUser = {...user, name : newName}
                 await fetch(`http://localhost:5000/edit?field=name&value=${encodeURI(newName)}`)
@@ -91,11 +91,11 @@ const Account = ({toggleDisplayAccount}) => {
         
         <div className="bio">
             <div className="name" >
-                <h2 spellCheck={false} contentEditable={false} className='bio-name'>{user.name}</h2>
+                <h2 spellCheck={false} contentEditable={false} className='bio-name'>{userInfo.name}</h2>
                 <i className='ri-edit-2-fill' onClick={() => editName()}></i>
             </div>
-            <div className="bio-text"><span className='bio-text-info'>{typeof user.bio === 'undefined' || user.bio.length === 0 ? "Add Bio" : ''}</span>
-                <h4 spellCheck={false} contentEditable={false} id='bio-text'>{user.bio}</h4>
+            <div className="bio-text"><span className='bio-text-info'>{typeof userInfo.bio === 'undefined' || userInfo.bio.length === 0 ? "Add Bio" : ''}</span>
+                <h4 spellCheck={false} contentEditable={false} id='bio-text'>{userInfo.bio}</h4>
                 <i className='ri-edit-2-fill' onClick={() => editBio()}></i>
             </div>
         </div>
@@ -120,31 +120,29 @@ const Account = ({toggleDisplayAccount}) => {
                     let newUser = {
                         ...user,
                     }
-                    if(user.followers.includes(user._id)){
-                        let newFollowers = user.followers.filter((value) => {
-                            return String(value) === String(user._id) ? '' : value
+                    if(userInfo.followers.includes(user)){
+                        let newFollowers = userInfo.followers.filter((value) => {
+                            return String(value) === String(user) ? '' : value
                         })
                         newUser.followers = newFollowers
                     }else{
-                        newUser.followers.push(user._id)
+                        newUser.followers.push(user)
                     }
                     dispatch({
                         type: 'SET_USER',
                         user: newUser
                     })
 
-                    let res = await fetch(`http://localhost:5000/follow?followed=${user._id}&followed_by=${user._id}`)
-                    let data = await res.json()
-                                          
+                    let res = await fetch(`http://localhost:5000/follow?followed=${user}&followed_by=${user}`)
                     }
                     followFunction()
                 }
             }>
                 <div className="stat-icon">
-                    <i className={`${user.followers.includes(String(user._id)) ? 'ri-user-follow-fill' : 'ri-user-fill'}`}></i>
+                    <i className={`${userInfo.followers.includes(String(user)) ? 'ri-user-follow-fill' : 'ri-user-fill'}`}></i>
                 </div>
                 <div className="stat-text">
-                    <h3>{user.followers.length} Followers</h3>
+                    <h3>{userInfo.followers.length} Followers</h3>
                 </div>
             </div>
 
@@ -163,13 +161,12 @@ const Account = ({toggleDisplayAccount}) => {
                     <i className='ri-thumb-up-fill'></i>
                 </div>
                 <div className="stat-text">
-                    <h3>{user.following} Following</h3>
+                    <h3>{userInfo.following} Following</h3>
                 </div>
             </div>
         </div>
 
         <UserPosts toggleDisplayAccount ={toggleDisplayAccount}/>
-
     </div>
   )
 }
