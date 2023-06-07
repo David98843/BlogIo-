@@ -43,6 +43,10 @@ mongoose.connect(DB_STRING, {
 
 // app.use('/', require('./routes'))
 
+app.get('/', (req, res) => {
+    res.send("Hwllo")
+})
+
 app.get('/register', async (req, res) => {
         const {name, email, password} = req.query
         let errors = []
