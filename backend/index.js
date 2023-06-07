@@ -1,29 +1,49 @@
+const express = require('express')
+const app = express()
+const mongoose = require('mongoose')
+const cors = require('cors')
+const passport = require('passport')
+const session = require('express-session')
 const bcrypt = require('bcryptjs')
 const User = require('./models/User')
 const Post = require('./models/Post')
 const Comment = require('./models/Comment')
-const express = require("express")
-const multer = require('multer')
-const path = require('path')
-const passport = require('passport')
-const router = express.Router()
+require('dotenv').config()
 
-    let uploadName
-    let loggedInUser
+// require('./middleware')(app)
 
-    const storage = multer.diskStorage({
-        destination : (req, file, cb) => {
-            cb(null, './frontend/public/')
-        },
-        filename: (req, file, cb)  => {
-            uploadName = `post-image-${Date.now()}${path.extname(file.originalname)}`
-            cb(null, uploadName)
-        }
-    })
-    
-    const upload = multer({storage : storage})
+app.use(express.urlencoded({extended : true}))
+app.set("view engine", 'ejs')
+app.use(cors())
+// SESSION
+app.use(session({
+    secret : "keyboard cat",
+    resave : true,
+    saveUnitialized : true,
+}))
 
-    router.get('/register', async (req, res) => {
+// PASSPORT
+require('./config/passport')(passport)
+app.use(passport.initialize())
+app.use(passport.session())
+
+// DATABASE CONNECTION
+let DB_STRING_PROD = `mongodb+srv://Dave:${encodeURIComponent(process.env.DB_PASSWORD)}@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority`
+
+if(app.get('env') == 'development'){
+    DB_STRING = DB_STRING_PROD
+}else{
+    DB_STRING = null
+}
+mongoose.connect(DB_STRING, {
+    useNewUrlParser: true
+})
+    .then(() => console.log('Database Successfully Connected'))
+    .catch(err => console.log(err))
+
+// app.use('/', require('./routes'))
+
+app.get('/register', async (req, res) => {
         const {name, email, password} = req.query
         let errors = []
         if(!name || !email || !password){
@@ -56,7 +76,7 @@ const router = express.Router()
     })
 
 
-router.get('/login', async (req, res, next) => {
+app.get('/login', async (req, res, next) => {
 
     const {email, password} = req.query
     
@@ -85,7 +105,7 @@ router.get('/login', async (req, res, next) => {
     }
 })
 
-router.get('/edit', async(req,res, next) => {
+app.get('/edit', async(req,res, next) => {
 
     const {field, value, user} = req.query
     if(field.toLowerCase() == 'name'){
@@ -101,7 +121,7 @@ router.get('/edit', async(req,res, next) => {
     }
 })
 
-router.get('/addPost', async (req, res) => {
+app.get('/addPost', async (req, res) => {
     const {title, content, contentText,contentHTML, dateCreated, time, user} = req.query
     const newPost = Post({
         title,
@@ -123,7 +143,7 @@ router.get('/addPost', async (req, res) => {
     })
 })
 
-router.get('/editPost', async(req, res) => {
+app.get('/editPost', async(req, res) => {
     const {title, content, contentText,contentHTML, dateCreated, time, postID, user} = req.query
     await Post.findOneAndUpdate({_id:postID}, {
         title,
@@ -141,7 +161,7 @@ router.get('/editPost', async(req, res) => {
     })
 })
 
-router.get('/deletePost', async(req, res) => {
+app.get('/deletePost', async(req, res) => {
     const {id} = req.query
     await Post.findOneAndDelete({_id: id})
     res.json({
@@ -149,12 +169,12 @@ router.get('/deletePost', async(req, res) => {
     })
 })
 
-router.get('/allPost', async (req, res) => {
+app.get('/allPost', async (req, res) => {
     let allPost = await Post.find()
     res.json({allPost})
 })
 
-router.get('/userInfo', async(req, res) => {
+app.get('/userInfo', async(req, res) => {
     const {id} = req.query
     let theUser = await User.findOne({_id:id})
     if(theUser){
@@ -175,7 +195,7 @@ router.get('/userInfo', async(req, res) => {
     }
 })
 
-router.get('/follow', async(req, res, next) => {
+app.get('/follow', async(req, res, next) => {
     const {followed, followed_by} = req.query
     const theUser = await User.findOne({_id:followed})
     const theFollowingUser = await User.findOne({_id: followed_by})
@@ -206,7 +226,7 @@ router.get('/follow', async(req, res, next) => {
 
 })
 
-router.get('/userPosts', async(req, res) => {
+app.get('/userPosts', async(req, res) => {
     const {id} = req.query
     const userPosts = await Post.find({
         author: id
@@ -217,7 +237,7 @@ router.get('/userPosts', async(req, res) => {
     })
 })
 
-router.get('/getComments', async(req, res) => {
+app.get('/getComments', async(req, res) => {
     const {id} = req.query
     const allComments = await Comment.find({postID: id})
     res.json({
@@ -226,7 +246,7 @@ router.get('/getComments', async(req, res) => {
     })
 })
 
-router.get('/getReplies', async(req, res) => {
+app.get('/getReplies', async(req, res) => {
     const {id} = req.query
     const theReplies = await Comment.find({replyingComment: id})
     res.json({
@@ -235,11 +255,11 @@ router.get('/getReplies', async(req, res) => {
     })
 })
 
-router.get('/deleteComments', async(req, res) => {
+app.get('/deleteComments', async(req, res) => {
     await Comment.deleteMany()
 })
 
-router.get('/comment', async(req, res) => {
+app.get('/comment', async(req, res) => {
     const {text, postID, date, time, user} = req.query
     let newComment = Comment({
         text,
@@ -255,7 +275,7 @@ router.get('/comment', async(req, res) => {
     })
 })
 
-router.get('/reply', async(req, res) => {
+app.get('/reply', async(req, res) => {
     const {text, postID, date, time, commentID, replyingUser, user} = req.query
     let newReply = Comment({
         text,
@@ -279,7 +299,7 @@ router.get('/reply', async(req, res) => {
     })
 })
 
-router.get('/view', async(req, res, next) => {
+app.get('/view', async(req, res, next) => {
     const {postID, userID, viewed} = req.query
     let thePost = await Post.findOne({_id: postID})
     if(viewed){
@@ -290,7 +310,7 @@ router.get('/view', async(req, res, next) => {
     
 })
 
-router.get('/like', async(req, res, next) => {
+app.get('/like', async(req, res, next) => {
     const {postID, userID, liked} = req.query
     let thePost = await Post.findOne({_id: postID})
     let updated
@@ -311,11 +331,6 @@ router.get('/like', async(req, res, next) => {
     })
 })
 
-// router.get('/logout',(req, res) => {
-//     loggedInUser = {}
-//     res.json({
-//         message: 'Logout Successful',
-//     })    
-// })
 
-module.exports = router
+const PORT = process.env.PORT || 30
+app.listen(PORT, console.log(`App started on PORT ${PORT}`))

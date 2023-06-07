@@ -143,7 +143,7 @@
   },
   "scripts": {
     "test": "jest",
-    "dev": "nodemon /api/index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
