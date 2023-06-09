@@ -11,7 +11,7 @@ const ViewUserAccount = () => {
     const [numPosts, setNumPosts] = useState()
     
     const fetchUserPosts = async () => {
-      let res = await fetch(`http://localhost:5000/userPosts?id=${viewingUser.id}`)
+      let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${viewingUser.id}`)
       let data = await res.json()
       return data
     }
@@ -84,7 +84,7 @@ const ViewUserAccount = () => {
                             user: newViewingUser
                         })
 
-                        let res = await fetch(`http://localhost:5000/follow?followed=${viewingUser.id}&followed_by=${user}`)
+                        let res = await fetch(`https://blog-io.vercel.app/follow?followed=${viewingUser.id}&followed_by=${user}`)
                         let data = await res.json()
                         if(data.message === 'success'){
                         }else{}

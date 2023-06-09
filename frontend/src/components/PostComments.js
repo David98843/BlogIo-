@@ -6,7 +6,7 @@ const PostComments = ({toggleViewUserAccount}) => {
   const [{currentPost, currentPostComments, user}, dispatch] = useDataLayerValue()
 
   const fetchCurrentPostComments = async() => {
-    let res = await fetch(`http://localhost:5000/getComments?id=${currentPost._id}`)
+    let res = await fetch(`https://blog-io.vercel.app/getComments?id=${currentPost._id}`)
     let data = await res.json()
     if(data.comments){
       return data
@@ -45,7 +45,7 @@ const PostComments = ({toggleViewUserAccount}) => {
       // let newCurrentPostComments = [...currentPostComments, newComment]
       // console.log(newCurrentPostComments)
   
-      let res = await fetch(`http://localhost:5000/comment?text=${text}&postID=${postID}&date=${date}&time=${time}&user=${user}`)
+      let res = await fetch(`https://blog-io.vercel.app/comment?text=${text}&postID=${postID}&date=${date}&time=${time}&user=${user}`)
       let data = await res.json()
       if(data.comment){
         dispatch({

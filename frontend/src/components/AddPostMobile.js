@@ -165,7 +165,7 @@ const AddPostMobile = () => {
         }else{
             if(editPost){
                 if(content_html.length > 2){
-                    let res = await fetch(`http://localhost:5000/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
+                    let res = await fetch(`https://blogo-io.vercel.app/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
                     let data = await res.json()
             
                     if(data.message === 'success'){
@@ -192,7 +192,7 @@ const AddPostMobile = () => {
 
             }else{
                 if(content_html.length > 2){
-                    let res = await fetch(`http://localhost:5000/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
+                    let res = await fetch(`https://blogo-io.vercel.app/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
                     let data = await res.json()
                     if(data.message === 'success'){
                         dispatch({

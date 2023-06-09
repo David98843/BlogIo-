@@ -110,7 +110,7 @@ const App = () => {
     const [{user, userInfo, posts, currentPost, viewingUser, userPosts, showAddPost, displayUserAccount}, dispatch] = useDataLayerValue()
 
     const getUser = () => {
-        // const res = await fetch('http://localhost:5000/verifyLogin')
+        // const res = await fetch('https://blog-io.vercel.app/verifyLogin')
         let user = window.localStorage.getItem('user')
         // const data = await res.json()
         // return data
@@ -122,7 +122,7 @@ const App = () => {
     }
 
     const fetchUserInfo = async (id) => {
-        let res = await fetch(`http://localhost:5000/userInfo?id=${id}`)
+        let res = await fetch(`https://blog-io.vercel.app/userInfo?id=${id}`)
         let data = await res.json()
         if(data.message === 'success'){
             return data.user
@@ -131,13 +131,13 @@ const App = () => {
 
 
     const fetchPosts = async () => {
-        const res = await fetch('http://localhost:5000/allPost')
+        const res = await fetch('https://blog-io.vercel.app/allPost')
         const data = await res.json()
         return data.allPost
     }
 
     const fetchUserPosts = async (id) => {
-        let res = await fetch(`http://localhost:5000/userPosts?id=${id}`)
+        let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${id}`)
         let data = await res.json()
         return data
       }

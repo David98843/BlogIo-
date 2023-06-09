@@ -7,7 +7,7 @@ const PostItem = ({post, id}) => {
     const [numComments, setNumComment] = useState(null)
 
     const fetchComments = async () => {
-        let res = await fetch(`http://localhost:5000/getComments?id=${post._id}`)
+        let res = await fetch(`https://blog-io.vercel.app/getComments?id=${post._id}`)
         let data = await res.json()
         if(data.comments){
             return data.comments.length
@@ -49,7 +49,7 @@ const PostItem = ({post, id}) => {
             })
             let postViews = document.getElementById(`post-views-${id}`)
             postViews.innerText = 1
-            await fetch(`http://localhost:5000/view?userID=${user}&postID=${post._id}&viewed=false`)
+            await fetch(`https://blog-io.vercel.app/view?userID=${user}&postID=${post._id}&viewed=false`)
         }else{
             dispatch({
                 type: 'SET_CURRENT_POST',
@@ -63,7 +63,7 @@ const PostItem = ({post, id}) => {
         let postLikes = document.getElementById(`post-likes-${id}`)
         let currLikes = Number(postLikes.innerText)
         if(post.likes.includes(user)){
-            await fetch(`http://localhost:5000/like?userID=${user}&postID=${post._id}&liked=true`)
+            await fetch(`https://blog-io.vercel.app/like?userID=${user}&postID=${post._id}&liked=true`)
             let newLikes = post.likes.filter((value) => {
                 return value == user ? '' : value
             })
@@ -72,7 +72,7 @@ const PostItem = ({post, id}) => {
                 likes: [...newLikes]
             }
         }else{
-            await fetch(`http://localhost:5000/like?userID=${user}&postID=${post._id}&liked=false`)
+            await fetch(`https://blog-io.vercel.app/like?userID=${user}&postID=${post._id}&liked=false`)
             post.likes.unshift(user)
         }
         postLikes.innerText = post.likes.length

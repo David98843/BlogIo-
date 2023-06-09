@@ -18,7 +18,7 @@ const Account = ({toggleDisplayAccount}) => {
                 name_input.innerText = userInfo.name
             }else{
                 let newUser = {...userInfo, name : newName}
-                await fetch(`http://localhost:5000/edit?field=name&value=${encodeURI(newName)}`)
+                await fetch(`https://blogo-io.vercel.app/edit?field=name&value=${encodeURI(newName)}`)
 
                 dispatch({
                     type: 'SET_USER_INFO',
@@ -52,7 +52,7 @@ const Account = ({toggleDisplayAccount}) => {
             bio_input.setAttribute('contenteditable', false)
             let newBio = e.target.innerText.trim()
             let newUser = {...userInfo, bio: newBio}
-            await fetch(`http://localhost:5000/edit?field=bio&value=${encodeURI(newBio)}`)
+            await fetch(`https://blogo-io.vercel.app/edit?field=bio&value=${encodeURI(newBio)}`)
 
 
             dispatch({

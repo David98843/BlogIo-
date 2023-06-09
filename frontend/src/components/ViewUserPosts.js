@@ -11,7 +11,7 @@ const ViewUserPosts = () => {
 
   useEffect(() => {
     const fetchUserPosts = async() => {
-      let res = await fetch(`http://localhost:5000/userPosts?id=${viewingUser.id}`)
+      let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${viewingUser.id}`)
       let data = await res.json()
       if(data.message == 'success'){
           setViewingUserPosts([...data.posts])

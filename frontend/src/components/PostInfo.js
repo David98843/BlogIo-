@@ -8,7 +8,7 @@ const PostInfo = ({toggleViewUserAccount}) => {
     const [authorChange, setAuthorChange] = useState(false)
 
     const fetchuserInfo = async (id) => {
-        let res = await fetch(`http://localhost:5000/userInfo?id=${encodeURIComponent(id)}`);
+        let res = await fetch(`https://blog-io.vercel.app/userInfo?id=${encodeURIComponent(id)}`);
         let data = await res.json();
         if(data.message = 'success'){
             return data.user

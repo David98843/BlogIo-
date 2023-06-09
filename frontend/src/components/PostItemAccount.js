@@ -10,7 +10,7 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
     if(confirmDelete)
         await deleteFromServer()
     async function deleteFromServer(){ 
-        let res = await fetch(`http://localhost:5000/deletePost?id=${post._id}`)
+        let res = await fetch(`https://blog-io.vercel.app/deletePost?id=${post._id}`)
         let data = await res.json()
         if(data.message === 'success'){
             dispatch({
