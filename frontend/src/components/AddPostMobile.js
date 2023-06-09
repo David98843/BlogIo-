@@ -237,7 +237,7 @@ const AddPostMobile = () => {
             }>
                 <i className="ri-arrow-go-back-fill"></i>
             </div>
-            <div className="text-cont all-text-cont" id="text-cont">
+            <div className="text-cont" id="text-cont">
                 <div id="mobile-text-area" className="mobile-text-area" 
                 // onPaste={
                 //     (e) => {

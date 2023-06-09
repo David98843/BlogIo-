@@ -9,7 +9,7 @@ hour = String(hour).length === 1 ? `0${String(hour)}` : String(hour)
 minute = String(minute).length === 1 ? `0${String(minute)}` : String(minute)
 
 let time = `${hour}:${minute}`
-let dateCreated = `${month} ${day}, ${year}`
+let dateCreated = `${month} ${day}`
 
 module.exports = {
     truncateStr : (str, n_chars) => {

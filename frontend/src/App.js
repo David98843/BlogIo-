@@ -188,12 +188,10 @@ const App = () => {
         await setUser()
         let account = document.getElementById('account')
         account.classList.toggle('displayAccount')
-        if(user){
-            dispatch({
-                type: 'TOGGLE_DISPLAY_USER',
-                currentValue: displayUserAccount
-            })
-        }
+        dispatch({
+            type: 'SET_USER_POSTS',
+            posts: posts.filter(value => value.author === user)
+        })
         document.body.classList.add('no-overflow')
     }
     

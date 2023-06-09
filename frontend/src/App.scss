@@ -14,6 +14,8 @@
 
 $paragraph : Bellota, Georgia, 'Times New Roman', Times, serif;
 $title : Poppins, Arial, Helvetica, sans-serif;
+$cornflowerblue : rgb(100, 149, 237);
+$whitesmoke: #f5f5f5;
 
 body{
     width: 100%;
@@ -30,7 +32,7 @@ body{
     align-items: center;
     justify-content: space-between;
     padding: 5px;
-    background: whitesmoke;
+    background: $whitesmoke;
     z-index: 3;
     box-shadow: 3px 3px 10px rgba(136, 133, 133, 0.555);
 
@@ -51,6 +53,22 @@ body{
     }
 }
 
+.sticky-nav{
+    display:none;
+    justify-content: space-evenly;
+    background: $whitesmoke;
+    position: sticky;
+    top:0;
+
+    a{
+        display: inline-block;
+        text-decoration: none;
+        color: black;
+        padding : 20px 35px;
+        font-size: 25px;
+    } 
+}
+
 .post-item-link{
     text-decoration: none;
     color: black;
@@ -62,7 +80,7 @@ body{
     flex-flow: column;
     align-items: flex-end;
     justify-content: space-between;
-    background: whitesmoke;
+    background: $whitesmoke;
     border-radius: 5px;
     margin : 20px auto;
     transition : .3s ease-in;
@@ -87,12 +105,13 @@ body{
         transition : .2s ease-in;
 
         .info-col{
-            
             width: 70%;
+            overflow-x: visible;
 
             h2{
                 font-family: $title; 
                 width: 100%;
+                overflow-x: visible;
             }
             p{
                 font-family: $paragraph;
@@ -150,11 +169,11 @@ body{
 
             .icon:nth-of-type(2) {
                 i{
-                    color: gray;
+                    color: #979494;
                 }
 
                 .liked{
-                    color: cornflowerblue;
+                    color: $cornflowerblue;
                 }
             }
         }
@@ -178,11 +197,11 @@ body{
             font-family: $paragraph;
             border: none;
             border-radius: 20px;
-            background: whitesmoke
+            background: $whitesmoke
         }
 
         input:focus{
-            border: 2px solid cornflowerblue;
+            border: 2px solid $cornflowerblue;
             outline: none;
         }
     }
@@ -258,7 +277,7 @@ body{
     padding-bottom:10vh;
 
     div a{
-        color: black;
+        color: #000000;
         text-decoration: none;
     }
 }
@@ -270,13 +289,13 @@ body{
     height: 86vh;
     overflow-y: scroll;
     top: 14vh;
-    background: whitesmoke;
+    background: $whitesmoke;
     z-index: -1;
     padding-bottom: 7%;
 
     .read-percent{
         width: 0%;
-        background: cornflowerblue;
+        background: $cornflowerblue;
         height: 5px;
         top: 0%;
         position: sticky;
@@ -425,7 +444,7 @@ body{
             .image{
                 width: 25%;
                 height: 60%;
-                background: white;
+                background: #ffffff;
                 padding: 8px;
                 border-radius: 50%;
                 z-index: 5;
@@ -437,12 +456,12 @@ body{
 
             a:hover{
                 text-decoration: underline;
-                text-decoration-color:blueviolet ;
+                text-decoration-color:#8a2be2 ;
                 cursor: pointer
             }
 
             .comment-box{
-                background: cornflowerblue;
+                background: $cornflowerblue;
                 border-radius: 5px;
                 width: 100%;
                 display:flex;
@@ -485,7 +504,7 @@ body{
                         overflow: auto;
                     }
                     textarea:focus{
-                        border: 2px solid cornflowerblue;
+                        border: 2px solid $cornflowerblue;
                         outline: none;
                     }
                 }
@@ -528,13 +547,13 @@ body{
             width: 55%;
             position: fixed;
             bottom:0;
-            background: whitesmoke;
+            background: $whitesmoke;
             z-index: 10;
             padding: 5px;
 
             .image{
                 width: 10%;
-                background: white;
+                background: #ffffff;
                 padding: 10px;
                 margin: 5px;
                 border-radius: 50%;
@@ -546,7 +565,7 @@ body{
                 textarea{
                     font-size: 16px;
                     font-family: $paragraph;
-                    border: 1px solid cornflowerblue;
+                    border: 1px solid $cornflowerblue;
                     border-radius: 5px;
                     resize: none;
                     height: 50px;
@@ -555,7 +574,7 @@ body{
                 }
 
                 textarea:focus{
-                    border: 2px solid cornflowerblue;
+                    border: 2px solid $cornflowerblue;
                     outline: none;
                 }
             }
@@ -622,7 +641,7 @@ body{
     border-top-left-radius:20px;
     border-top-right-radius:20px;
     height:80vh;
-    background:whitesmoke;
+    background:$whitesmoke;
     box-shadow: -5px -5px 15px rgba(240, 236, 236, 0.568), 5px 5px 10px rgba(24, 23, 23, 0.575);
     transition: .2s ease-in;
     overflow-y: auto;
@@ -640,7 +659,7 @@ body{
     .image{
         width:35%;
         margin:20px auto;
-        background:cornflowerblue;
+        background:$cornflowerblue;
         border-radius: 50%;
         padding: 10px;
 
@@ -706,7 +725,7 @@ body{
             
             i{
                 font-size: 25px;
-                color:whitesmoke
+                color:$whitesmoke
             }
         }
         
@@ -714,11 +733,12 @@ body{
 
     .no-posts{
         width: 80%;
-        background: cornflowerblue;
+        background: $cornflowerblue;
         font-size: 20px;
         font-family: $title;
         padding: 10px;
         margin: 10px auto;
+        border-radius: 5px;
     }
 
     .post-item{
@@ -759,7 +779,7 @@ body{
             left: 75%;
             width: 23%;
             top: 15%;
-            background: cornflowerblue;
+            background: $cornflowerblue;
             padding: 5px;
             border-radius: 3px;
             opacity: 0;
@@ -799,6 +819,8 @@ body{
             height:100%;
             flex-flow:column;
             overflow: hidden;
+            align-items: flex-end;
+            justify-content: space-evenly;
             
 
             .info-date-col{
@@ -856,15 +878,15 @@ body{
 }
 
 .stat:nth-of-type(1) .stat-icon{
-    background: cornflowerblue;
+    background: $cornflowerblue;
 }
 
 .stat:nth-of-type(2) .stat-icon{
-    background: crimson;
+    background: #dc143c;
 }
 
 .stat:nth-of-type(3) .stat-icon{
-    background: goldenrod;
+    background: #daa520;
 }
 
 
@@ -882,17 +904,17 @@ body{
         a{
             display:inline-block;
             text-decoration: none;
-            color:black;
-            background: white;
+            color:#000000;
+            background: #ffffff;
             padding: 15px 25px;
             margin: 10px;
             font-family: $paragraph;
             font-size: 17px;
-            border: 1px solid black;
+            border: 1px solid #000000;
         }
         .displaying{
-            background: gray;
-            color: white;
+            background: #808080;
+            color: #ffffff;
         }
     }
 
@@ -928,7 +950,7 @@ body{
 
 
             .pwd-item{
-                background:cornflowerblue;
+                background:$cornflowerblue;
                 display:flex;
                 align-items: center;
                 margin: 10px auto;
@@ -936,7 +958,7 @@ body{
                 input{
                     font-size: 15px;
                     padding:0px 10px;
-                    border:1px solid cornflowerblue;
+                    border:1px solid $cornflowerblue;
                     height:100%;
                 }
 
@@ -952,18 +974,18 @@ body{
                 padding:7px 10px;
                 margin:10px auto;
                 font-family: $title;
-                border:1px solid cornflowerblue;
+                border:1px solid $cornflowerblue;
                 font-size: 15px;
             }
             input:focus{
                 outline:none;
-                border: 2px solid cornflowerblue
+                border: 2px solid $cornflowerblue
             }
             button{
                 display:inline-block;
                 text-decoration: none;
-                color:white;
-                background: cornflowerblue;
+                color:#ffffff;
+                background: $cornflowerblue;
                 padding: 12px 25px;
                 margin: 10px;
                 font-family: $paragraph;
@@ -997,7 +1019,7 @@ body{
     transition: .2s ease-in;
 
     .selected{
-        border: 2px solid blue;
+        border: 2px solid #2c2cdb;
     }
 
 }
@@ -1021,7 +1043,7 @@ body{
         font-size: 30px;
         top: 0;
         left: 92%;
-        background: grey;
+        background: #808080;
         border-radius: 50%;
         padding: 10px;
     }
@@ -1033,9 +1055,9 @@ body{
 
     .post-title{
         margin-bottom: 25px;
-        border: 1px solid black;
+        border: 1px solid #000000;
         font-size: 15px;
-        background: white;
+        background: #ffffff;
         width: 80%;
         padding: 5px;
         font-family: $paragraph;
@@ -1057,7 +1079,7 @@ body{
         button{
             padding: 10px 25px;
             width: 80%;
-            background: gray;
+            background: #808080;
             font-size: 18px;
             font-family: $title;     
             border: none;
@@ -1066,10 +1088,10 @@ body{
     }
 
     .text-block{
-        color:black;
+        color:#000000;
         height:100px;
         width: 80%;
-        background: gray;
+        background: #808080;
         font-family: $title;
         display: flex;
         align-items: center;
@@ -1100,7 +1122,7 @@ body{
         margin:10px auto;
 
         .control{
-            background: gray;
+            background: #808080;
             margin: 10px 7px;
             padding: 7px;
             border-radius: 3px;
@@ -1132,7 +1154,7 @@ body{
     .post-image{
         margin: 10px auto;
         padding: 10px;
-        border: 1px solid grey;
+        border: 1px solid #808080;
         width: 80%;
         font-family: $paragraph;
 
@@ -1146,7 +1168,7 @@ body{
 .display-area{
     width:70%;
     height:100%;
-    background: whitesmoke;
+    background: $whitesmoke;
     overflow-y: scroll;
     // padding-top: 50px;
     padding: 50px 5px 0px;
@@ -1155,7 +1177,7 @@ body{
         width:200px;
         height: 100px;
         background: rgba(151, 148, 148, 0);
-        border: 2px solid gray;
+        border: 2px solid #808080;
         display:inline-block;
         font-family: Arial;
         resize: both;
@@ -1175,12 +1197,12 @@ body{
     }
 
     .selected{
-        border: 2px solid blue;
+        border: 2px solid #0000ff;
     }
 
 }
 .selected{
-    border: 2px solid blue;
+    border: 2px solid #0000ff;
 }
 
 
@@ -1237,13 +1259,13 @@ body{
     flex-flow: column;
     width: 100%;
     height: 100%;
-    background: whitesmoke;
+    background: $whitesmoke;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: absolute;
     top: 0%;
     z-index: 5;
-    background: whitesmoke;
+    background: $whitesmoke;
     box-shadow: -5px -5px 15px rgba(240, 236, 236, 0.568), 5px 5px 10px rgba(24, 23, 23, 0.575);
     animation-name: slideUp;
     animation-duration: .4s;
@@ -1260,7 +1282,7 @@ body{
 
     .text-cont{
         width: 100%;
-        background: whitesmoke;
+        background: $whitesmoke;
         position: relative;
         font-size: 16px;
         font-family: Arial, Helvetica, sans-serif;
@@ -1287,7 +1309,7 @@ body{
 
             .text-block{
                 background: rgba(151, 148, 148, 0);
-                border: 2px solid gray;
+                border: 2px solid #808080;
                 display:inline-block;
                 font-family: Arial;
                 overflow-x: hidden;
@@ -1305,7 +1327,7 @@ body{
                 overflow: hidden;
             }
             .selected{
-                border: 2px solid blue;
+                border: 2px solid #0000ff;
             }
 
         }
@@ -1326,8 +1348,8 @@ body{
         top: 63%;
         left: 5%;
         z-index: 10;
-        color: white;
-        background: royalblue;
+        color: #ffffff;
+        background: #4169e1;
         padding: 5px 5px 2px;
         border-radius: 4px;
         font-size: 25px;
@@ -1339,10 +1361,10 @@ body{
         height: 40%;
         display: flex;
         flex-flow: column;
-        background: whitesmoke;
+        background: $whitesmoke;
         align-items: center;
         justify-content: space-between;
-        border-top: 1px solid cornflowerblue;
+        border-top: 1px solid $cornflowerblue;
         overflow-y: auto;
         overflow-x: hidden;
         transition: .2s ease-in;
@@ -1363,7 +1385,7 @@ body{
 
             button{
                 padding: 5px 10px;
-                background: gray;
+                background: #808080;
                 margin: 5px;
                 width: 20%;
                 border: none;
@@ -1375,33 +1397,33 @@ body{
 
         .controls-2{
             width: 100%;
-            justify-content: space-between; 
+            justify-content: center; 
             align-items: center;
             padding: 0px 5px;
+            font-size: 16px;
 
             input{
-                border: 1px solid royalblue;
-                font-size: 16px;
+                border: 1px solid #4169e1;
                 font-family: $title;
-                padding: 3px;
-                width: 70%;
+                padding: 5px 3px;
+                width:70%;
             }
             #post-title{
                 width: 100%;
             }
             input:focus{
                 outline: none;
-                border: 2px solid royalblue;
+                border: 2px solid #4169e1;
             }
             button{
-                background: lighten(royalblue, 3%);
-                padding: 10px 15px;
+                background: lighten(#4169e1, 3%);
+                padding: 5px 15px;
                 font-family: $title;
-                border: none;
-                border-radius: 2px;
+                border: 2px solid #4169e1;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                border-radius: 0;
             }
             button:focus{
                 border: none;
@@ -1410,9 +1432,8 @@ body{
         }
 
         .controls-3{
-            justify-content: space-between;
+            justify-content: center;
             font-family: $title;
-            font-size: 16px;
             align-items: center;
             width: 100%;
             padding: 5px;
@@ -1422,8 +1443,9 @@ body{
                 text-overflow: ellipsis;
                 overflow: hidden;
                 width: 70%;
-                border: 1px solid royalblue;
-                padding: 5px;
+                border: 1px solid #4169e1;
+                padding: 5px 10px;
+                font-size: 14px;
             }
 
             input{
@@ -1431,14 +1453,14 @@ body{
             }
 
             button{
-                background: lighten(royalblue, 2%);
-                padding: 10px 15px;
+                background: lighten(#4169e1, 2%);
+                padding: 5px 10px;
                 font-family: $title;
-                border:none;
-                border-radius: 3px;
+                border:2px solid #4169e1;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                font-size: 14px;
             }
         }
         .controls-4{
@@ -1449,9 +1471,9 @@ body{
                 font-size: 18px;
                 border: none;
                 border-radius: 5px;
-                width: 60%;
-                background: white;
-                border:2px solid lighten(royalblue, 2%);
+                // width: 60%;
+                background: #ffffff;
+                border:2px solid lighten(#4169e1, 2%);
             }
         }
     }
@@ -1464,6 +1486,9 @@ body{
     body{
         overflow-x: hidden;
         overflow-y: scroll;
+        background: rgb(230, 228, 228);
+        width: 100%;
+        height: 100%;
     }
 
     .no-overflow{
@@ -1473,18 +1498,23 @@ body{
     .header{
         flex-flow: column;
         align-items: flex-start;
-        position: sticky;
+        position: absolute;
         top:0;
         height: auto;
 
         .logo{
-            width:50%
+            width:50%;
         }
 
         .nav{
-            width:100%
+            width:100%;
         }
     }
+
+    .sticky-nav{
+        display: flex;
+    }
+
     .add-post-mobile{
         display: flex;
     }
@@ -1495,6 +1525,9 @@ body{
         top: 0;
         height: 100%;
         z-index: 4;
+        border-radius: 0;
+        animation-name: slideUp;
+        animation-duration: .3s;
 
         .go-back{
             display: block
@@ -1661,16 +1694,20 @@ body{
     .header{
         flex-flow: row;
         align-items: center;
-        position: space-between;
         overflow:hidden;
+        position: sticky;
+        top: 0;
 
         .logo{
             width:30%
         }
 
         .nav{
-            width: 50%
+            width: 50%;
         }
+    }
+    .sticky-nav{
+        display: none;
     }
     .account{
         left: 40%;
@@ -1732,12 +1769,13 @@ body{
     .add-post-mobile{
         width: 90%;
         left: 5%;
-        top: 20%;
+        // top: 20%;
+
 
         .controls-cont{
             height: 50%;
             .controls-2, .controls-3{
-                width: 50%;
+                width: 60%;
             }
         }
     }

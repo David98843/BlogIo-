@@ -17,6 +17,7 @@ const Header = (props) => {
 
 
     return (
+        <>
         <div className="header">
 
             <div className="logo">
@@ -30,6 +31,14 @@ const Header = (props) => {
                 <a href="#" title="Logout" onClick={() => logOut()}><i className="ri-logout-circle-line"></i></a>
             </div>
         </div>
+        <div className="sticky-nav">
+            <a href="#"><i className="ri-home-3-line"></i></a>
+            <a href="#" title={user ? 'Profile' : 'Login'} onClick={() => {
+                props.toggleDisplayAccount()
+            }}><i className="ri-user-line" ></i></a>
+            <a href="#" title="Logout" onClick={() => logOut()}><i className="ri-logout-circle-line"></i></a>            
+        </div>
+        </>
     )
 }
 

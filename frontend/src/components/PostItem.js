@@ -133,7 +133,7 @@ const PostItem = ({post, id}) => {
                     }
                 }>
                     <div className="info-col">
-                        <h2>{truncateStr(post.title, 10)}</h2>
+                        <h2>{truncateStr(post.title, 28)}</h2>
                         <p id={`info-para${id}`}></p>
                     </div>
                     <div className="date-col">

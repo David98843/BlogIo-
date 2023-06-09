@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Images and other static files
-/public
+
 /src/bootstrap-4.0.0-dist
 /src/fonts
 /src/icons.css
