@@ -25,6 +25,4 @@ yarn-error.log*
 # Images and other static files
 
 /src/bootstrap-4.0.0-dist
-/src/fonts
-/src/icons.css
 /src/db.json
