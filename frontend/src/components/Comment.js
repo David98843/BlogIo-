@@ -12,7 +12,7 @@ const Comment = ({comment, toggleViewUserAccount}) => {
     const [displayReplies, setDisplayReplies] = useState(false)
 
     const fetchUserInfo = async (id) => {
-        let res = await fetch(`https://blogo-io.vercel.app/userInfo?id=${id}`)
+        let res = await fetch(`https://blog-io.vercel.app/userInfo?id=${id}`)
         let data = await res.json()
         if(data.user){
             return data.user
@@ -20,7 +20,7 @@ const Comment = ({comment, toggleViewUserAccount}) => {
     }
 
     const fetchReply = async (id) => {
-        let res = await fetch(`https://blogo-io.vercel.app/getReplies?id=${id}`)
+        let res = await fetch(`https://blog-io.vercel.app/getReplies?id=${id}`)
         let data = await res.json()
         if(data.replies){
             return data.replies
@@ -47,7 +47,7 @@ const Comment = ({comment, toggleViewUserAccount}) => {
         let date = `${month} ${day}, ${year}`
         let time = `${hour}:${minute}`
 
-        let res = await fetch(`https://blogo-io.vercel.app/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}&user=${user}`)
+        let res = await fetch(`https://blog-io.vercel.app/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}&user=${user}`)
         let data = await res.json()
         if(data.comment){
             textInput.value = ''
