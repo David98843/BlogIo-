@@ -81,7 +81,7 @@ const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
             }
         }
         if(errors.length == 0){
-            let res = await fetch(`https://blogo-io.vercel.app/register?name=${encodeURIComponent(name_register)}&email=${encodeURIComponent(email_register)}&password=${encodeURIComponent(password_register)}`)
+            let res = await fetch(`https://blog-io.vercel.app/register?name=${encodeURIComponent(name_register)}&email=${encodeURIComponent(email_register)}&password=${encodeURIComponent(password_register)}`)
             let data = await res.json()
             if(data.success){
                 error_cont.innerHTML = data.success
@@ -118,11 +118,11 @@ const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
                 
             // })
             // console.log(res)
-            let res = await fetch(`https://blogo-io.vercel.app/login?email=${encodeURIComponent(email_login)}&password=${encodeURIComponent(password_login)}`)
+            let res = await fetch(`https://blog-io.vercel.app/login?email=${encodeURIComponent(email_login)}&password=${encodeURIComponent(password_login)}`)
             let data = await res.json()
             if(data.message == 'success'){
 
-                let userInfoRes = await fetch(`https://blogo-io.vercel.app/userInfo?id=${encodeURIComponent(data.user)}`)
+                let userInfoRes = await fetch(`https://blog-io.vercel.app/userInfo?id=${encodeURIComponent(data.user)}`)
                 let userInfoData = await userInfoRes.json()
 
                 dispatch({
