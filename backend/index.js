@@ -20,7 +20,7 @@ app.use(cors())
 
 
 // DATABASE CONNECTION
-let DB_STRING_PROD = `mongodb+srv://Dave:Dave@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority"
+let DB_STRING_PROD = "mongodb+srv://Dave:Dave@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority"
 
 if(app.get('env') == 'development'){
     DB_STRING = process.env.DB_DEV
