@@ -183,7 +183,7 @@ const PostItem = ({post, id}) => {
                 </div>
             </div> */}
 
-            </a>
+ 
 
         </div> : ''
         
