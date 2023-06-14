@@ -1,5 +1,5 @@
 import { useDataLayerValue } from './../DataLayer'
-import {truncateStr} from './../utils'
+import {truncateStr, serverUrl} from './../utils'
 import { useState } from 'react'
 
 const PostItem = ({post, id}) => {
@@ -7,7 +7,7 @@ const PostItem = ({post, id}) => {
     const [numComments, setNumComment] = useState(null)
 
     const fetchComments = async () => {
-        let res = await fetch(`https://blog-io.vercel.app/getComments?id=${post._id}`)
+        let res = await fetch(`${serverUrl}/getComments?id=${post._id}`)
         let data = await res.json()
         if(data.comments){
             return data.comments.length
@@ -49,7 +49,7 @@ const PostItem = ({post, id}) => {
             })
             let postViews = document.getElementById(`post-views-${id}`)
             postViews.innerText = 1
-            await fetch(`https://blog-io.vercel.app/view?userID=${user}&postID=${post._id}&viewed=false`)
+            await fetch(`${serverUrl}/view?userID=${user}&postID=${post._id}&viewed=false`)
         }else{
             dispatch({
                 type: 'SET_CURRENT_POST',
@@ -63,7 +63,7 @@ const PostItem = ({post, id}) => {
         let postLikes = document.getElementById(`post-likes-${id}`)
         let currLikes = Number(postLikes.innerText)
         if(post.likes.includes(user)){
-            await fetch(`https://blog-io.vercel.app/like?userID=${user}&postID=${post._id}&liked=true`)
+            await fetch(`${serverUrl}/like?userID=${user}&postID=${post._id}&liked=true`)
             let newLikes = post.likes.filter((value) => {
                 return value == user ? '' : value
             })
@@ -72,7 +72,7 @@ const PostItem = ({post, id}) => {
                 likes: [...newLikes]
             }
         }else{
-            await fetch(`https://blog-io.vercel.app/like?userID=${user}&postID=${post._id}&liked=false`)
+            await fetch(`${serverUrl}/like?userID=${user}&postID=${post._id}&liked=false`)
             post.likes.unshift(user)
         }
         postLikes.innerText = post.likes.length
@@ -88,8 +88,8 @@ const PostItem = ({post, id}) => {
     return (
         post ? 
             <div>
-            <a href={`#${post._id}`}>
             <div className="post-item" id={`#${post._id}`}>
+            <a href={`#${post._id}`}>
                 <div className="image"
                 onClick={ 
                     () => {
@@ -110,7 +110,7 @@ const PostItem = ({post, id}) => {
                 }>
                     <img src="/images1/apple-1302430_1920.jpg" alt="post-image" width = "100%" height = "100%" id={`image-${id}`} onLoad={ async () => {
                         let infoParagraph = document.getElementById(`info-para${id}`)
-                        infoParagraph.innerHTML = truncateStr(post.contentText,29)
+                        infoParagraph.innerHTML = truncateStr(post.contentText,80)
                         let commentsData = await fetchComments()
                         setNumComment(commentsData)
                     }} />
@@ -133,16 +133,17 @@ const PostItem = ({post, id}) => {
                     }
                 }>
                     <div className="info-col">
-                        <h2>{truncateStr(post.title, 28)}</h2>
+                        <h2>{truncateStr(post.title, 38)}</h2>
                         <p id={`info-para${id}`}></p>
                     </div>
-                    <div className="date-col">
+                    {/* <div className="date-col">
                         <div className="item">
                             <p>{post.dateCreated}</p>
                             <p>{post.time}</p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
+                </a>
                 <div className="extra-info">
                     <div className="icons">
                         <div className="icon">
@@ -180,9 +181,6 @@ const PostItem = ({post, id}) => {
                     </button>
                 </div>
             </div> */}
-
-            </a>
-
         </div> : ''
         
     )

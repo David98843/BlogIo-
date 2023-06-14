@@ -1,6 +1,6 @@
 import { useDataLayerValue } from "../DataLayer"
 import {useState, useEffect} from 'react'
-import { truncateStr } from '../utils'
+import { truncateStr, serverUrl } from '../utils'
 
 const PostInfo = ({toggleViewUserAccount}) => {
     const [{currentPost}, dispatch] = useDataLayerValue()
@@ -8,7 +8,7 @@ const PostInfo = ({toggleViewUserAccount}) => {
     const [authorChange, setAuthorChange] = useState(false)
 
     const fetchuserInfo = async (id) => {
-        let res = await fetch(`https://blog-io.vercel.app/userInfo?id=${encodeURIComponent(id)}`);
+        let res = await fetch(`${serverUrl}/userInfo?id=${encodeURIComponent(id)}`);
         let data = await res.json();
         if(data.message = 'success'){
             return data.user

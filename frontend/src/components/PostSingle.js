@@ -2,7 +2,6 @@ import { useDataLayerValue } from '../DataLayer'
 import PostSingleContent from './PostSingleContent'
 import PostInfo from './PostInfo'
 import PostComments from './PostComments'
-import {useState} from "react"
 
 const PostSingle = ({toggleViewUserAccount}) => {
 

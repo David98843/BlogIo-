@@ -4,6 +4,7 @@ import React,{
 } from 'react'
 import PostItemAccount from './PostItemAccount'
 import { useDataLayerValue } from '../DataLayer'
+import { serverUrl } from '../utils'
 
 const ViewUserPosts = () => {
   const [{viewingUser}, dispatch] = useDataLayerValue()
@@ -11,7 +12,7 @@ const ViewUserPosts = () => {
 
   useEffect(() => {
     const fetchUserPosts = async() => {
-      let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${viewingUser.id}`)
+      let res = await fetch(`${serverUrl}/userPosts?id=${viewingUser.id}`)
       let data = await res.json()
       if(data.message == 'success'){
           setViewingUserPosts([...data.posts])

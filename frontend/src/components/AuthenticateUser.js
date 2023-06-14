@@ -1,5 +1,7 @@
 import {React, useState} from "react"
 import {useDataLayerValue} from './../DataLayer'
+import { serverUrl } from "../utils"
+
 
 const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
     const [name_register, setName] = useState()
@@ -81,7 +83,7 @@ const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
             }
         }
         if(errors.length == 0){
-            let res = await fetch(`https://blogo-io.vercel.app/register?name=${encodeURIComponent(name_register)}&email=${encodeURIComponent(email_register)}&password=${encodeURIComponent(password_register)}`)
+            let res = await fetch(`${serverUrl}/register?name=${encodeURIComponent(name_register)}&email=${encodeURIComponent(email_register)}&password=${encodeURIComponent(password_register)}`)
             let data = await res.json()
             if(data.success){
                 error_cont.innerHTML = data.success
@@ -105,24 +107,12 @@ const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
             let form_data = new FormData()
             form_data.append('email', email_login)
             form_data.append('password', password_login)
-            
-            // let res = await fetch('https://blogo-io.vercel.app/login', {
-            //     body: { 
-            //         email: email_login,
-            //         password: password_login
-            //     },
-            //     method : "POST",
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded'
-            //     }
-                
-            // })
-            // console.log(res)
-            let res = await fetch(`https://blogo-io.vercel.app/login?email=${encodeURIComponent(email_login)}&password=${encodeURIComponent(password_login)}`)
+        
+            let res = await fetch(`${serverUrl}/login?email=${encodeURIComponent(email_login)}&password=${encodeURIComponent(password_login)}`)
             let data = await res.json()
             if(data.message == 'success'){
 
-                let userInfoRes = await fetch(`https://blogo-io.vercel.app/userInfo?id=${encodeURIComponent(data.user)}`)
+                let userInfoRes = await fetch(`${serverUrl}/userInfo?id=${encodeURIComponent(data.user)}`)
                 let userInfoData = await userInfoRes.json()
 
                 dispatch({

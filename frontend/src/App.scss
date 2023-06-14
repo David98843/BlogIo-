@@ -16,13 +16,14 @@ $paragraph : Bellota, Georgia, 'Times New Roman', Times, serif;
 $title : Poppins, Arial, Helvetica, sans-serif;
 $cornflowerblue : rgb(100, 149, 237);
 $whitesmoke: #f5f5f5;
+$primaryColor: rgb(108, 184, 214);
 
 body{
     width: 100%;
     height: 100%;
     overflow: hidden;
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 
 .header{
@@ -32,12 +33,18 @@ body{
     align-items: center;
     justify-content: space-between;
     padding: 5px;
-    background: $whitesmoke;
+    background: $primaryColor;
     z-index: 3;
     box-shadow: 3px 3px 10px rgba(136, 133, 133, 0.555);
 
     .logo{
         width: 20%;
+        padding: 20px;
+
+        img{
+            width: 80%;
+            height: 80%;
+        }
     }
     .nav{
         display:flex;
@@ -56,7 +63,7 @@ body{
 .sticky-nav{
     display:none;
     justify-content: space-evenly;
-    background: $whitesmoke;
+    background: $primaryColor;
     position: sticky;
     top:0;
 
@@ -64,7 +71,7 @@ body{
         display: inline-block;
         text-decoration: none;
         color: black;
-        padding : 20px 35px;
+        padding : 10px 35px;
         font-size: 25px;
     } 
 }
@@ -80,10 +87,17 @@ body{
     flex-flow: column;
     align-items: flex-end;
     justify-content: space-between;
-    background: $whitesmoke;
-    border-radius: 5px;
-    margin : 20px auto;
     transition : .3s ease-in;
+    border-radius: 5px;
+    background: transparent;
+    margin: 15px auto;
+
+    a{
+        margin: 0;
+        padding: 0;
+        display: block;
+        width: 100%;
+    }
 
     .image{
         width: 100%;
@@ -105,7 +119,7 @@ body{
         transition : .2s ease-in;
 
         .info-col{
-            width: 70%;
+            width: 100%;
             overflow-x: visible;
 
             h2{
@@ -158,9 +172,14 @@ body{
 
             .icon{
                 display: flex;
-                flex-flow: column;
+                flex-flow: row;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-evenly;
+                background: white;
+                border-radius: 20px;
+                padding: 5px;
+                width: 20%;
+
                 i{
                     font-size:22px;
                     display: block;
@@ -267,7 +286,7 @@ body{
 
 .post-listing{
     position: absolute;
-    background: rgb(230, 228, 228);
+    background: $whitesmoke;
     left: 0;
     top: 10vh;
     height: 100%;
@@ -748,6 +767,9 @@ body{
         height: 180px;
         position: relative;
         width: 95%;
+        padding: 0;
+        border-bottom: none;
+        margin: 10px auto;
 
         .display-option-icons{
             position: absolute;
@@ -1482,7 +1504,63 @@ body{
     }
 }
 
-@media screen and (min-width:100px) and (max-width:900px){
+@media screen and (max-width: 500px) {
+
+    .post-listing{
+        padding-top: 100px;
+    }
+
+    .post-listing{
+        background: whitesmoke
+    }
+
+    .post-item{
+        width: 100%;
+        border-radius: 0px;
+        background: transparent;
+        margin: 0;
+        border-bottom: 6px solid rgb(151, 150, 150);
+        padding: 14px 0px;
+
+        .image{
+
+            img{
+                border-radius: 0px;
+            }
+        }
+
+        .text{
+            border-radius: 0px;
+            .info-col{
+                width: 100%;
+
+                h2{
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    .post-item:hover{
+        box-shadow: none;
+    }
+
+    .post-body{
+        .title{
+            font-size: 22px;
+        }
+
+        .info{
+            .author{
+                width: 10%;
+                max-width: 200px;
+            }
+
+        }
+    }
+}
+
+@media screen and (min-width:100px) and (max-width:500px){
     body{
         overflow-x: hidden;
         overflow-y: scroll;
@@ -1498,12 +1576,15 @@ body{
     .header{
         flex-flow: column;
         align-items: flex-start;
+        justify-content: center;
         position: absolute;
         top:0;
         height: auto;
 
         .logo{
             width:50%;
+            padding: 0;
+            margin: 0px auto;
         }
 
         .nav{
@@ -1685,35 +1766,10 @@ body{
 
 }
 
-@media screen and (min-width: 500px) and (max-width:900px) {
+// @media screen and (min-width: 500px) and (max-width:900px) {
 
-    body{
-        background: rgb(230, 228, 228);
-    }
-
-    .header{
-        flex-flow: row;
-        align-items: center;
-        overflow:hidden;
-        position: sticky;
-        top: 0;
-
-        .logo{
-            width:30%
-        }
-
-        .nav{
-            width: 50%;
-        }
-    }
-    .sticky-nav{
-        display: none;
-    }
     .account{
-        left: 40%;
-        height: 60vh;
         width: 55%;
-        top: 40%;
     }
 
     .view-user{
@@ -1721,9 +1777,6 @@ body{
     }
     
     .post-body{
-        top:0vh;
-        position:absolute;
-        height: 100vh;
         padding-bottom: 100px;
 
         .info{
@@ -1731,7 +1784,8 @@ body{
                 width: 40%; 
 
                 image{
-                    width: 30%;
+                    width: 25%;
+                    max-width: 300px;
                 }
             }
         }
@@ -1739,7 +1793,7 @@ body{
         .post-comment{
 
             .comment{
-                width: 50%;
+                width: 60%;
 
                 .image{
                     width: 20%;
@@ -1780,74 +1834,8 @@ body{
         }
     }
 
-    .post-listing{
-        display:flex;
-        justify-content: space-evenly;
-        // align-items: center;
-        flex-wrap: wrap;
 
-        div{
-            width:40%;
-            display: inline-block;
-
-            .post-item{
-                width: 100%;
-
-                .text{
-                    justify-content: space-between;
-                    .date-col{
-                        justify-content: center;
-                    }
-                }
-
-                .extra-info{
-                    justify-content: center;
-                    align-items: center;
-                }
-            }
-
-            .post-item-lazy{
-                width: 100%;
-                height: 220px;
-
-                .image-block{
-                    height: 40%
-                }
-            }
-
-            .post-item-comment-box{
-                width: 100%;
-                justify-content: center;
-                align-items: center;
-                display: none;
-                .input{
-                    width: 120%;
-                }
-            }
-            .displayPostItemCommentBox{
-                display: flex;
-            }
-        }
-    }
-    // .add-post-mobile{
-    //     width: 80%;
-
-    //     .text-cont{
-    //         width: 100%;
-    //         height: 50%;
-
-    //         #mobile-text-area{
-    //             .text-block{
-    //                 width: 85%;
-    //             }
-    //         }
-    //     }
-
-    //     .controls-cont{
-    //         height: 50%;
-    //     }
-    // }
-}
+// }
 
 
 @media screen and (min-width: 900px) and (max-width: 1200px) {

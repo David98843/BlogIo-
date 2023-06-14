@@ -1,7 +1,7 @@
 import React from 'react'
 import {useState} from 'react'
 import { useDataLayerValue } from '../DataLayer'
-import { dateCreated, time, selectElement, setEditable, removeEditable } from '../utils'
+import { dateCreated, time, selectElement, setEditable, removeEditable, serverUrl } from '../utils'
 
 const AddPost = () => {
   const [{user, posts, editPost, userPosts, showAddPost}, dispatch] = useDataLayerValue()
@@ -181,7 +181,7 @@ const AddPost = () => {
     }else{
 
       if(editPost){
-        let res = await fetch(`https://blogo-io.vercel.app/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
+        let res = await fetch(`${serverUrl}/editPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&postID=${editPost._id}&user=${user}`)
         let data = await res.json()
 
         if(data.message === 'success'){
@@ -206,7 +206,7 @@ const AddPost = () => {
 
 
       }else{
-        let res = await fetch(`https://blogo-io.vercel.app/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
+        let res = await fetch(`${serverUrl}/addPost?title=${title}&content=${content}&contentText=${content_text}&contentHTML=${content_html}&dateCreated=${dateCreated}&time=${time}&user=${user}`)
         let data = await res.json()
 
         if(data.message === 'success'){

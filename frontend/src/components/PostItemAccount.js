@@ -1,5 +1,5 @@
 import React from 'react'
-import { truncateStr } from '../utils'
+import { truncateStr, serverUrl } from '../utils'
 import { useDataLayerValue } from '../DataLayer'
 
 const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
@@ -10,7 +10,7 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
     if(confirmDelete)
         await deleteFromServer()
     async function deleteFromServer(){ 
-        let res = await fetch(`https://blog-io.vercel.app/deletePost?id=${post._id}`)
+        let res = await fetch(`${serverUrl}/deletePost?id=${post._id}`)
         let data = await res.json()
         if(data.message === 'success'){
             dispatch({
@@ -19,11 +19,7 @@ const PostItemAccount = ({post, editable, toggleDisplayAccount}) => {
                     return valPost._id === post._id ? '' : valPost
                 })]
             })
-
-            // let currentPostElement = document.getElementById(`post-item${post._id}`)
-            // let currentPostElementParent = currentPostElement.parentNode
-            // currentPostElementParent.removeChild(currentPostElement)
-
+            
             dispatch({
                 type: 'SET_USER_POSTS',
                 posts: [...userPosts.map(valPost => {

@@ -4,6 +4,7 @@ import React, {
 } from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import ViewUserPosts from './ViewUserPosts'
+import { serverUrl } from '../utils'
 
 const ViewUserAccount = () => {
     const [displayAccountPosts, setDisplayAccountPosts] = useState(false)
@@ -11,7 +12,7 @@ const ViewUserAccount = () => {
     const [numPosts, setNumPosts] = useState()
     
     const fetchUserPosts = async () => {
-      let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${viewingUser.id}`)
+      let res = await fetch(`${serverUrl}/userPosts?id=${viewingUser.id}`)
       let data = await res.json()
       return data
     }
@@ -84,7 +85,7 @@ const ViewUserAccount = () => {
                             user: newViewingUser
                         })
 
-                        let res = await fetch(`https://blog-io.vercel.app/follow?followed=${viewingUser.id}&followed_by=${user}`)
+                        let res = await fetch(`${serverUrl}/follow?followed=${viewingUser.id}&followed_by=${user}`)
                         let data = await res.json()
                         if(data.message === 'success'){
                         }else{}

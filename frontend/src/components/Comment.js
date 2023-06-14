@@ -1,18 +1,17 @@
 import React, {useState, useEffect} from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import Reply from './Reply'
-import { truncateStr } from '../utils'
+import { truncateStr, serverUrl } from '../utils'
 
 
 const Comment = ({comment, toggleViewUserAccount}) => {
     
     const [{currentPost, currentPostComments, user, viewingUser}, dispatch] = useDataLayerValue()
-    // const [replyingUserInfo, setReplyingUserInfo] = useState(null)
     const [commentReplies, setCommentReplies] = useState([])
     const [displayReplies, setDisplayReplies] = useState(false)
 
     const fetchUserInfo = async (id) => {
-        let res = await fetch(`https://blogo-io.vercel.app/userInfo?id=${id}`)
+        let res = await fetch(`${serverUrl}/userInfo?id=${id}`)
         let data = await res.json()
         if(data.user){
             return data.user
@@ -20,7 +19,7 @@ const Comment = ({comment, toggleViewUserAccount}) => {
     }
 
     const fetchReply = async (id) => {
-        let res = await fetch(`https://blogo-io.vercel.app/getReplies?id=${id}`)
+        let res = await fetch(`${serverUrl}/getReplies?id=${id}`)
         let data = await res.json()
         if(data.replies){
             return data.replies
@@ -47,7 +46,7 @@ const Comment = ({comment, toggleViewUserAccount}) => {
         let date = `${month} ${day}, ${year}`
         let time = `${hour}:${minute}`
 
-        let res = await fetch(`https://blogo-io.vercel.app/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}&user=${user}`)
+        let res = await fetch(`${serverUrl}/reply?text=${text}&commentID=${comment._id}&date=${date}&time=${time}&replyingUser=${comment.user}&postID=${currentPost._id}&user=${user}`)
         let data = await res.json()
         if(data.comment){
             textInput.value = ''
@@ -56,12 +55,6 @@ const Comment = ({comment, toggleViewUserAccount}) => {
                 setDisplayReplies(true)
             }
             await getAndSetCommentReplies()
-            // if(commentReplies.length > 0){
-            //     let newCommentElement = document.getElementById(`comment-container${commentReplies[commentReplies.length-1]._id}`)
-            //     newCommentElement.scrollIntoView({
-            //         block: 'end'
-            //     })
-            // }
         }
     }
 

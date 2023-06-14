@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import Comment from './Comment'
+import { serverUrl } from '../utils'
 
 const PostComments = ({toggleViewUserAccount}) => {
   const [{currentPost, currentPostComments, user}, dispatch] = useDataLayerValue()
 
   const fetchCurrentPostComments = async() => {
-    let res = await fetch(`https://blog-io.vercel.app/getComments?id=${currentPost._id}`)
+    let res = await fetch(`${serverUrl}/getComments?id=${currentPost._id}`)
     let data = await res.json()
     if(data.comments){
       return data
@@ -42,10 +43,7 @@ const PostComments = ({toggleViewUserAccount}) => {
       let date = `${month} ${day}, ${year}`
       let time = `${hour}:${minute}`
       
-      // let newCurrentPostComments = [...currentPostComments, newComment]
-      // console.log(newCurrentPostComments)
-  
-      let res = await fetch(`https://blog-io.vercel.app/comment?text=${text}&postID=${postID}&date=${date}&time=${time}&user=${user}`)
+      let res = await fetch(`${serverUrl}/comment?text=${text}&postID=${postID}&date=${date}&time=${time}&user=${user}`)
       let data = await res.json()
       if(data.comment){
         dispatch({

@@ -98,6 +98,7 @@ import AddPost from "./components/AddPost"
 import ViewUserAccount from "./components/ViewUserAccount"
 import AddPostMobile from "./components/AddPostMobile"
 import { useDataLayerValue } from "./DataLayer"
+import { serverUrl } from "./utils"
 import './App.css'
 import './icons.css'
 import React,{
@@ -110,10 +111,7 @@ const App = () => {
     const [{user, userInfo, posts, currentPost, viewingUser, userPosts, showAddPost, displayUserAccount}, dispatch] = useDataLayerValue()
 
     const getUser = () => {
-        // const res = await fetch('https://blog-io.vercel.app/verifyLogin')
         let user = window.localStorage.getItem('user')
-        // const data = await res.json()
-        // return data
         if(user){
             return user
         }else{
@@ -122,7 +120,7 @@ const App = () => {
     }
 
     const fetchUserInfo = async (id) => {
-        let res = await fetch(`https://blog-io.vercel.app/userInfo?id=${id}`)
+        let res = await fetch(`${serverUrl}/userInfo?id=${id}`)
         let data = await res.json()
         if(data.message === 'success'){
             return data.user
@@ -131,13 +129,13 @@ const App = () => {
 
 
     const fetchPosts = async () => {
-        const res = await fetch('https://blog-io.vercel.app/allPost')
+        const res = await fetch(`${serverUrl}/allPost`)
         const data = await res.json()
         return data.allPost
     }
 
     const fetchUserPosts = async (id) => {
-        let res = await fetch(`https://blog-io.vercel.app/userPosts?id=${id}`)
+        let res = await fetch(`${serverUrl}/userPosts?id=${id}`)
         let data = await res.json()
         return data
       }
@@ -154,10 +152,6 @@ const App = () => {
                 type: 'SET_USER',
                 user: userData
             })
-
-            // let userPostsData = await fetchUserPosts(userData)
-            // if(userPostsData.posts){
-            // }
         }
     }
 

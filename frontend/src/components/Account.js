@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { useDataLayerValue } from '../DataLayer'
 import UserPosts from './UserPosts'
+import { serverUrl } from "./../utils"
 
 const Account = ({toggleDisplayAccount}) => {
     const [{user, userInfo, userPosts, showAddPost, posts}, dispatch] = useDataLayerValue()
@@ -18,7 +19,7 @@ const Account = ({toggleDisplayAccount}) => {
                 name_input.innerText = userInfo.name
             }else{
                 let newUser = {...userInfo, name : newName}
-                await fetch(`https://blogo-io.vercel.app/edit?field=name&value=${encodeURI(newName)}`)
+                await fetch(`${serverUrl}/edit?field=name&value=${encodeURI(newName)}`)
 
                 dispatch({
                     type: 'SET_USER_INFO',
@@ -52,7 +53,7 @@ const Account = ({toggleDisplayAccount}) => {
             bio_input.setAttribute('contenteditable', false)
             let newBio = e.target.innerText.trim()
             let newUser = {...userInfo, bio: newBio}
-            await fetch(`https://blogo-io.vercel.app/edit?field=bio&value=${encodeURI(newBio)}`)
+            await fetch(`${serverUrl}/edit?field=bio&value=${encodeURI(newBio)}`)
 
 
             dispatch({
@@ -138,7 +139,7 @@ const Account = ({toggleDisplayAccount}) => {
                         userInfo: newUser
                     })
 
-                    let res = await fetch(`http://localhost:5000/follow?followed=${user}&followed_by=${user}`)
+                    let res = await fetch(`${serverUrl}/follow?followed=${user}&followed_by=${user}`)
                     }
                     followFunction()
                 }
