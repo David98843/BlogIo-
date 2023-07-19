@@ -161,7 +161,7 @@ const AddPostMobile = () => {
         content_text = encodeURIComponent(content_text);
 
         if(!title || !content){
-            alert('No way')
+            alert('Please add a title and aome content')
         }else{
             if(editPost){
                 if(content_html.length > 2){
@@ -321,10 +321,10 @@ const AddPostMobile = () => {
                 <div className="controls controls-2">
                     <input type="text" id="post-title" placeholder='Post Title' defaultValue = {editPost ? editPost.title : ''} />
                 </div>
-                <div className="controls controls-2">
+                /*<div className="controls controls-2">
                     <input type="text" placeholder='Link URL'/>
                     <button>Add Link</button>
-                </div>
+                </div>*/
                 <div className="controls controls-3">
                     <label htmlFor="" id="post-image-name">Post Image</label>
                     <button onClick={
