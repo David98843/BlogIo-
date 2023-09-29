@@ -185,6 +185,14 @@ const AddPost = () => {
         let data = await res.json()
 
         if(data.message === 'success'){
+          dispatch({
+            type: 'TOGGLE_ADD_POST',
+            currentValue: true
+          })
+          dispatch({
+            type: 'SET_EDIT_POST',
+            post: null
+          })
           let updatedPost = data.post
           let newPosts = posts.map(post => {
             return post._id === editPost._id ? updatedPost : post

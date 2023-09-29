@@ -61,7 +61,7 @@ app.get('/register', async (req, res) => {
         }else{
             const theUser = await User.findOne({email})
             if(theUser){
-                res.json({error: 'User has been registered'})
+                res.json({error: 'Email has been registered'})
             }else{
                 const hashedPassword = await bcrypt.hash(password, 10)
                 const newUser = User({

@@ -87,7 +87,7 @@ const PostItem = ({post, id}) => {
     
     return (
         post ? 
-            <div>
+        <div>
             <div className="post-item" id={`#${post._id}`}>
             <a href={`#${post._id}`}>
                 <div className="image"
@@ -143,7 +143,7 @@ const PostItem = ({post, id}) => {
                         </div>
                     </div> */}
                 </div>
-                </a>
+            </a>
                 <div className="extra-info">
                     <div className="icons">
                         <div className="icon">

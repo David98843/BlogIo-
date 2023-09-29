@@ -83,8 +83,11 @@ const Comment = ({comment, toggleViewUserAccount}) => {
             <p>{comment.date} || {comment.time} || <a id='reply-link'
                 onClick={
                     () => {
-                        let replyBox = document.getElementById(`reply-box${comment._id}`)
-                        replyBox.classList.toggle('displayReplyBox')
+                        if(user){
+                            let replyBox = document.getElementById(`reply-box${comment._id}`)
+                            replyBox.classList.toggle('displayReplyBox')                            
+                        }
+
                         let commentUserImage = document.getElementById(`comment-container${comment._id}`)
                         commentUserImage.classList.toggle('parentComment')
                         if(comment.replies.length > 0){

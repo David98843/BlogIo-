@@ -70,7 +70,6 @@ const PostComments = ({toggleViewUserAccount}) => {
   return (
     <div className='post-comment'>
       {currentPostComments.map((comment, id) => {
-        console.log(comment)
         return !comment.isReply ? <Comment comment = {comment} key = {id} toggleViewUserAccount={toggleViewUserAccount} /> : ''
       })}
       

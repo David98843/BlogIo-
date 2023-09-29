@@ -105,6 +105,7 @@ import React,{
     useEffect,
     useState,
 } from 'react'
+import { Loading } from "./components/Loading"
 
 const App = () => {
 
@@ -166,6 +167,14 @@ const App = () => {
                 type: 'SET_USER_POSTS',
                 posts: posts.filter(value => value.author === user)
             })
+            let isDesktop = window.innerWidth > 900
+            if(isDesktop){
+                dispatch({
+                    type: 'SET_CURRENT_POST',
+                    post:  isDesktop ? data[0] : null
+                })        
+            }
+
         }
 
         const setUSER = async () => {
@@ -205,6 +214,7 @@ const App = () => {
 
     return(
         <>
+            <Loading/>
             <Header toggleDisplayAccount = {toggleDisplayAccount} setUser = {setUser} />
             {viewingUser ? <ViewUserAccount toggleViewUserAccount = {toggleViewUserAccount} /> : ''}
             <PostListing/>

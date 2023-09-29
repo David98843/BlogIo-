@@ -85,8 +85,8 @@ const AuthenticateUser = ({fetchUserPosts, toggleDisplayAccount}) => {
         if(errors.length == 0){
             let res = await fetch(`${serverUrl}/register?name=${encodeURIComponent(name_register)}&email=${encodeURIComponent(email_register)}&password=${encodeURIComponent(password_register)}`)
             let data = await res.json()
-            if(data.success){
-                error_cont.innerHTML = data.success
+            if(data.message == 'success'){
+                error_cont.innerHTML = 'Account Created Successfuly'
             }else{
                 error_cont.innerHTML = data.error
             }

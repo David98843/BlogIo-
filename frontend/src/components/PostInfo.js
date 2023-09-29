@@ -46,7 +46,7 @@ const PostInfo = ({toggleViewUserAccount}) => {
                             setAuthorChange(!authorChange)
                         }
                     }>
-                        <img src="/images1/01.jpg" alt="author-image" width={'100%'} height={'100%'}/>
+                        <img src="/images1/01.png" alt="author-image" width={'100%'} height={'100%'}/>
                     </div>
                     <div className="name">
                         <h3 id ='author-name-display'></h3>

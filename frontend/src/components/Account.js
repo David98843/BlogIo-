@@ -163,6 +163,22 @@ const Account = ({toggleDisplayAccount}) => {
             </div>
         </div>
 
+        <div className='add-post-btn'>
+            <button onClick={
+                () => {
+                    dispatch({
+                        type: 'TOGGLE_ADD_POST',
+                        currentValue: showAddPost
+                    })
+                    toggleDisplayAccount()
+                    document.body.classList.add('no-overflow')
+                }
+            }>
+                Add Post
+                <i className='ri-add-circle-fill'></i>
+            </button>
+        </div>
+
         <UserPosts toggleDisplayAccount ={toggleDisplayAccount}/>
     </div>
   )
