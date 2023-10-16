@@ -321,10 +321,10 @@ const AddPostMobile = () => {
                 <div className="controls controls-2">
                     <input type="text" id="post-title" placeholder='Post Title' defaultValue = {editPost ? editPost.title : ''} />
                 </div>
-                /*<div className="controls controls-2">
+                {/* <div className="controls controls-2">
                     <input type="text" placeholder='Link URL'/>
                     <button>Add Link</button>
-                </div>*/
+                </div>
                 <div className="controls controls-3">
                     <label htmlFor="" id="post-image-name">Post Image</label>
                     <button onClick={
@@ -337,7 +337,7 @@ const AddPostMobile = () => {
                             document.getElementById('post-image-name').innerText = e.target.files[0].name
                         }
                     }/>
-                </div>
+                </div> */}
                 <div className="controls controls-4">
                     <button onClick = {
                         () => {
