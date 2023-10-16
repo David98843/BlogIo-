@@ -111,6 +111,8 @@ const App = () => {
 
     const [{user, userInfo, posts, currentPost, viewingUser, userPosts, showAddPost, displayUserAccount}, dispatch] = useDataLayerValue()
 
+    console.log(serverUrl)
+
     const getUser = () => {
         let user = window.localStorage.getItem('user')
         if(user){

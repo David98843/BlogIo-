@@ -25,5 +25,5 @@ module.exports = {
     removeEditable : (e) => {
         e.target.setAttribute('contenteditable', false)
     },
-    serverUrl: 'blog-io.vercel.app',
+    serverUrl: 'https://blog-io.vercel.app',
 }
