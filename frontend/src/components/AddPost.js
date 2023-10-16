@@ -177,7 +177,7 @@ const AddPost = () => {
     content_html = encodeURIComponent(content_html)
 
     if(!title  || content_text.length < 2 ){
-      alert('No way')
+      alert('Add a title and some content.')
     }else{
 
       if(editPost){

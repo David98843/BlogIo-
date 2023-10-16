@@ -263,6 +263,7 @@ body {
   overflow-y: auto;
   z-index: -1;
   padding-bottom: 10vh;
+  padding-top : 10vh;
 }
 .post-listing div a {
   color: #000000;

@@ -15,20 +15,12 @@ require('dotenv').config()
 app.use(express.urlencoded({extended : true}))
 app.set("view engine", 'ejs')
 app.use(cors())
-// SESSION
-app.use(session({
-    secret : "keyboard cat",
-    resave : true,
-    saveUnitialized : true,
-}))
 
-// PASSPORT
-require('./config/passport')(passport)
-app.use(passport.initialize())
-app.use(passport.session())
+
+
 
 // DATABASE CONNECTION
-let DB_STRING_PROD = `mongodb+srv://Dave:${encodeURIComponent(process.env.DB_PASSWORD)}@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority`
+let DB_STRING_PROD = "mongodb+srv://Dave:Dave@cluster0.rogujex.mongodb.net/?retryWrites=true&w=majority"
 
 if(app.get('env') == 'development'){
     DB_STRING = process.env.DB_DEV
@@ -44,7 +36,7 @@ mongoose.connect(DB_STRING, {
 // app.use('/', require('./routes'))
 
 app.get('/', (req, res) => {
-    res.send("Hwllo")
+    res.send("Helo")
 })
 
 app.get('/register', async (req, res) => {
