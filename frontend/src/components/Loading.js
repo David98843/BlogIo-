@@ -3,7 +3,7 @@ export function Loading(){
         setTimeout(() => {
             let loader = document.querySelector('div.loader')
             loader.style.display = 'none';
-        }, 3000)
+        })
     }
     return(
         <div className="loader">
