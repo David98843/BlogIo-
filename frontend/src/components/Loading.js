@@ -1,10 +1,8 @@
 export function Loading(){
-    document.body.onload = () => {
-        setTimeout(() => {
-            let loader = document.querySelector('div.loader')
-            loader.style.display = 'none';
-        })
-    }
+        // setTimeout(() => {
+        //     let loader = document.querySelector('div.loader')
+        //     loader.style.display = 'none';
+        // }, 3000)
     return(
         <div className="loader">
             <div className="cont">
